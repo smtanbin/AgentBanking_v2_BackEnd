@@ -1,0 +1,10 @@
+{
+  "database": {
+    "user": "tanbin",
+    "password": "J@ria774234",
+    "connectString": "192.168.10.2:1521/ABSDB"
+  },
+  "server": {
+    "port": 3001
+  }
+}

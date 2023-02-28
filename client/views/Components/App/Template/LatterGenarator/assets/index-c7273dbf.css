@@ -1,0 +1,41 @@
+.page {
+  height: var(3508px/4);
+  width: var(2480px/4);
+  box-sizing: border-box;
+  margin: 3rem;
+  color: black;
+}
+
+
+.passage {
+
+   display:inline-block;
+  line-height: 1.5rem;
+  font-size: 1rem !important; 
+}
+.header {
+  width: 100%;
+  justify-content: space-around;
+  align-items: flex-start;
+  justify-content: center;
+  justify-items: center;
+  
+}
+.sig {
+    margin: -40px 0 -20px 0;
+  height: 100px;
+}
+.header-addr {
+   margin-right: 5px;
+  margin-left: auto;
+  padding: 1%;
+}
+.addrContainer {
+     margin-top: -60px;
+  width: 100%;
+}
+@media print {
+  footer {
+    page-break-after: always;
+  }
+}
