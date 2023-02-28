@@ -1,18 +1,19 @@
+import React, { useState, useMemo, useEffect, useRef } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 import uuid from "react-uuid"
-import { useState, useMemo, useEffect, useRef } from "react"
+
 import { ExportToExcel } from "./ExportToExcel"
 // vaerables
 // Icons
-import microsoftExcel from "../../../../../../src/assets/icons/microsoftExcel.svg"
-import searchIcon from "../../../../../../src/assets/icons/search.svg"
+import microsoftExcel from "../../../../../assets/icons/microsoftExcel.svg"
+import searchIcon from "../../../../../assets/icons/search.svg"
 import "./assets/index-c7273dbf.css"
 import Letter from "./Letters"
 
 const LatterGenarator = () => {
-  const baseurl = import.meta.env.VITE_API_URL
-  const [loading, setLoading] = useState()
+  const baseurl = ""
+  const [loading, setLoading] = useState(false)
   const [bulkData, setBulkData] = useState(null)
   const [agentNumber, setAgentNumber] = useState()
   const [agentList, setAgentList] = useState([])
@@ -47,7 +48,7 @@ const LatterGenarator = () => {
 
   const handelSubmit = async () => {
     setLoading(true)
-    const baseurl = import.meta.env.VITE_API_URL
+    const baseurl = ""
     try {
       const bodyResponse = await axios.post(`${baseurl}/api/accountList`, {
         agentNumber: agentNumber,

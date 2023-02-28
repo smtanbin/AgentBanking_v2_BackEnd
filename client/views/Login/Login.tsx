@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import React, { useState, useContext } from "react"
 import qs from "qs"
 import axios from "axios"
 import { encode } from "base-64"
@@ -8,7 +8,7 @@ import logo from "../../assets/img/logo.svg"
 import Animation from "./Animation/Animation"
 import { AuthContext } from "../../Context/AuthContext"
 
-const apiUrl = import.meta.env.VITE_API_URL
+const apiUrl = process.env.VITE_API_URL
 
 export default function LoginUI() {
   const cookies = new Cookies()
@@ -16,7 +16,7 @@ export default function LoginUI() {
   const [username, setUser] = useState("")
   const [password, setPassword] = useState("")
   const [errorClass, setErrorClass] = useState("")
-  const authInfo = useContext(AuthContext)
+  const authInfo: any = useContext(AuthContext)
   const updateAuth = authInfo.updateAuth
 
   /* axios*/
@@ -56,7 +56,7 @@ export default function LoginUI() {
 
   const handelUser = (e) => setUser(e.target.value)
   const handelPassword = (e) => setPassword(e.target.value)
-  const removeError = (e) => setErrorClass()
+  const removeError = () => setErrorClass()
   const handleEnterKey = (e) => {
     if (e.key === "Enter") networkRequest()
   }
@@ -105,9 +105,8 @@ export default function LoginUI() {
             </div>
             <div className="form-group column col-12">
               <button
-                className={`btn shadow-25 rounded col-12 px-2 ${
-                  errorClass ? "btn-error" : "btn-primary"
-                }`}
+                className={`btn shadow-25 rounded col-12 px-2 ${errorClass ? "btn-error" : "btn-primary"
+                  }`}
                 onClick={() => networkRequest()}
               >
                 Login

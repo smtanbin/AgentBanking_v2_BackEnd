@@ -1,6 +1,5 @@
-import react, { useState, useEffect } from "react"
-import { AccountStatus } from "./dashboard/AccountStatus"
-import { Balance } from "./dashboard/Balance"
+import React, { useState, useEffect } from "react"
+
 export function Dashboard() {
   return (
     <div>
@@ -8,20 +7,11 @@ export function Dashboard() {
         <div style={{ display: "flex" }}>
           <div className="column col-6">{/* <AccountStatus /> */}</div>
           <div className="column col-6">
-            <Balance />
+
           </div>
         </div>
       </section>
-      {/* <section className="columns p-2 m-2 card">
-                <div style={{ display: 'flex' }}>
-                    <div className="column col-6">
-                        <AccountStatus />
-                    </div>
-                    <div className="column col-6">
-                        <Balance />
-                    </div>
-                </div>
-            </section> */}
+
     </div>
   )
 }

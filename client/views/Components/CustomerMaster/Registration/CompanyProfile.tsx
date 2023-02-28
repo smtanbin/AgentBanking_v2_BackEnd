@@ -1,5 +1,5 @@
-import { useState } from "react"
-import Address from "./Address"
+import React, { useState } from "react"
+
 
 
 
@@ -9,10 +9,7 @@ const CompanyProfile = () => {
     const [permanentAddr, SetPermanentAddrType] = useState(false)
     const [mailAddr, SetMailAddrType] = useState(false)
 
-    function handleMaritalTypeChange(event) {
-        SetMaritalType(event.target.value)
-    }
-    function handleMaritalTypeChange(event) {
+    function handleMaritalTypeChange(event: any) {
         SetMaritalType(event.target.value)
     }
     function handlePermanentAddrChange() {

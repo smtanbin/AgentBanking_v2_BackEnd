@@ -1,3 +1,4 @@
+import React from "react"
 import uuid from "react-uuid"
 import { Link } from "react-router-dom"
 const Breadcrumb = ({ location }) => {

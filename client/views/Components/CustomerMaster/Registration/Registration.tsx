@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import React, { useState } from "react"
 import IndividualProfile from "./IndividualProfile"
 import CompanyProfile from "./CompanyProfile"
 import Address from "./Address"

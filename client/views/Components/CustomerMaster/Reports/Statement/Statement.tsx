@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import moment from "moment/moment"
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify"
@@ -294,10 +294,10 @@ export function Statement() {
                         {!headerPayload
                           ? ""
                           : headerPayload.BALANCE
-                          ? headerPayload.BALANCE.toLocaleString("en-BD", {
+                            ? headerPayload.BALANCE.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : 0}
+                            : 0}
                       </td>
                       <td colSpan="1"></td>
                     </tr>

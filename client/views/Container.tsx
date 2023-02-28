@@ -1,9 +1,11 @@
+import React from "react"
+import { useLocation, Outlet } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+// Component
 import SideNav from "./UX/SideNav"
 import Navbar from "./UX/Navbar/Navbar"
-import { useLocation, Outlet } from "react-router-dom"
 import Breadcrumb from "./UX/Navbar/Breadcrumb"
-import { ToastContainer } from "react-toastify"
-import React from "react"
+
 export default function Container() {
   let location: any = useLocation()
   location = location.pathname.toString()

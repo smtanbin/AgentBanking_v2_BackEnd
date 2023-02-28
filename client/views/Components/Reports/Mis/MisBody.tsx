@@ -1,5 +1,7 @@
+import React from "react";
 import uuid from "react-uuid"
 import moment from "moment/moment"
+
 
 const MisBody = ({
   date,
@@ -31,6 +33,7 @@ const MisBody = ({
   preCommision,
   curCommision,
   /*Table Data  Variables*/
+  handelAccounts,
   tableData,
 }) => {
   // Counters
@@ -53,11 +56,11 @@ const MisBody = ({
 
   return (
     <section className="m-2" id="mis-body" style={{ width: "100%" }}>
-      <style>{}</style>
+      <style>{ }</style>
       <table className="table table-scroll">
         <thead>
           <tr key={uuid()}>
-            <th colSpan="19" className="text-black text-center bg-none">
+            <th colSpan={19} className="text-black text-center bg-none">
               <span className="mr-1">
                 Agent Wise Comparative Business Performance for
               </span>
@@ -66,7 +69,7 @@ const MisBody = ({
           </tr>
           {lac ? (
             <tr key={uuid()}>
-              <th colSpan="31" className="text-small text-left">
+              <th colSpan={31} className="text-small text-left">
                 (Figure In Lac)
               </th>
             </tr>
@@ -74,17 +77,17 @@ const MisBody = ({
             <></>
           )}
           <tr className="active bg-gray" key={uuid()}>
-            <th rowSpan="2" className=" text-center text-small  bg-secondary">
+            <th rowSpan={2} className=" text-center text-small  bg-secondary">
               Sl
             </th>
-            <th rowSpan="2" className=" text-small text-center bg-secondary">
+            <th rowSpan={2} className=" text-small text-center bg-secondary">
               Name of Agent
             </th>
             {/* 
             //**Address Tab 
             */}
             {address ? (
-              <th rowSpan="2" className=" text-small text-center bg-secondary">
+              <th rowSpan={2} className=" text-small text-center bg-secondary">
                 Address
               </th>
             ) : (
@@ -95,7 +98,7 @@ const MisBody = ({
             */}
             {dateOfOpening ? (
               <th
-                rowSpan="2"
+                rowSpan={2}
                 className=" text-small text-center text-clip bg-secondary"
               >
                 Date of Opening
@@ -136,9 +139,9 @@ const MisBody = ({
               <th
                 colSpan={
                   preRemittance &&
-                  curRemittance &&
-                  preNoOfRemittance &&
-                  curNoOfRemittance
+                    curRemittance &&
+                    preNoOfRemittance &&
+                    curNoOfRemittance
                     ? 4
                     : (preRemittance && curRemittance && preNoOfRemittance) ||
                       (preRemittance && curRemittance && curNoOfRemittance) ||
@@ -146,11 +149,11 @@ const MisBody = ({
                         preNoOfRemittance &&
                         curNoOfRemittance) ||
                       (curRemittance && preNoOfRemittance && curNoOfRemittance)
-                    ? 3
-                    : (preRemittance && curRemittance) ||
-                      (preNoOfRemittance && curNoOfRemittance)
-                    ? 2
-                    : 0
+                      ? 3
+                      : (preRemittance && curRemittance) ||
+                        (preNoOfRemittance && curNoOfRemittance)
+                        ? 2
+                        : 0
                 }
                 className=" text-small text-center bg-secondary"
               >
@@ -172,11 +175,11 @@ const MisBody = ({
                       (preUtility && curUtility && curNoOfUtility) ||
                       (preUtility && preNoOfUtility && curNoOfUtility) ||
                       (curUtility && preNoOfUtility && curNoOfUtility)
-                    ? 3
-                    : (preUtility && curUtility) ||
-                      (preNoOfUtility && curNoOfUtility)
-                    ? 2
-                    : 0
+                      ? 3
+                      : (preUtility && curUtility) ||
+                        (preNoOfUtility && curNoOfUtility)
+                        ? 2
+                        : 0
                 }
                 className=" text-small text-center bg-secondary"
               >
@@ -187,13 +190,13 @@ const MisBody = ({
             )}
 
             {commision ? (
-              <th colSpan="2" className="text-small text-center bg-secondary">
+              <th colSpan={2} className="text-small text-center bg-secondary">
                 Commision
               </th>
             ) : null}
             <th
-              rowSpan="2"
-              colSpan="3"
+              rowSpan={2}
+              colSpan={3}
               className=" text-small text-left bg-secondary"
             >
               Remarks
@@ -345,26 +348,26 @@ const MisBody = ({
                       <td>
                         {PREVIOUSBALANCE && lac
                           ? (PREVIOUSBALANCE / 100000).toLocaleString("en-BD", {
-                              maximumFractionDigits: 2,
-                            })
+                            maximumFractionDigits: 2,
+                          })
                           : PREVIOUSBALANCE && !lac
-                          ? PREVIOUSBALANCE.toLocaleString("en-BD", {
+                            ? PREVIOUSBALANCE.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
                     {deposit && curDeposit ? (
                       <td className="text-bold">
                         {CURRENTBALANCE && lac
                           ? (CURRENTBALANCE / 100000).toLocaleString("en-BD", {
-                              maximumFractionDigits: 2,
-                            })
+                            maximumFractionDigits: 2,
+                          })
                           : CURRENTBALANCE && !lac
-                          ? CURRENTBALANCE.toLocaleString("en-BD", {
+                            ? CURRENTBALANCE.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
 
@@ -382,16 +385,16 @@ const MisBody = ({
                       <td>
                         {PREVIOUSREMITTANCEAMOUNT && lac
                           ? (PREVIOUSREMITTANCEAMOUNT / 100000).toLocaleString(
-                              "en-BD",
-                              {
-                                maximumFractionDigits: 2,
-                              }
-                            )
+                            "en-BD",
+                            {
+                              maximumFractionDigits: 2,
+                            }
+                          )
                           : PREVIOUSREMITTANCEAMOUNT && !lac
-                          ? PREVIOUSREMITTANCEAMOUNT.toLocaleString("en-BD", {
+                            ? PREVIOUSREMITTANCEAMOUNT.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
 
@@ -399,16 +402,16 @@ const MisBody = ({
                       <td className="text-bold">
                         {CURRENTREMITTANCEAMOUNT && lac
                           ? (CURRENTREMITTANCEAMOUNT / 100000).toLocaleString(
-                              "en-BD",
-                              {
-                                maximumFractionDigits: 2,
-                              }
-                            )
+                            "en-BD",
+                            {
+                              maximumFractionDigits: 2,
+                            }
+                          )
                           : CURRENTREMITTANCEAMOUNT && !lac
-                          ? CURRENTREMITTANCEAMOUNT.toLocaleString("en-BD", {
+                            ? CURRENTREMITTANCEAMOUNT.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
 
@@ -426,16 +429,16 @@ const MisBody = ({
                       <td>
                         {PreviousUtilityAmount && lac
                           ? (PreviousUtilityAmount / 100000).toLocaleString(
-                              "en-BD",
-                              {
-                                maximumFractionDigits: 2,
-                              }
-                            )
+                            "en-BD",
+                            {
+                              maximumFractionDigits: 2,
+                            }
+                          )
                           : PreviousUtilityAmount && !lac
-                          ? PreviousUtilityAmount.toLocaleString("en-BD", {
+                            ? PreviousUtilityAmount.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
 
@@ -443,16 +446,16 @@ const MisBody = ({
                       <td className="text-bold">
                         {CURRENTUTILITYAMOUNT && lac
                           ? (CURRENTUTILITYAMOUNT / 100000).toLocaleString(
-                              "en-BD",
-                              {
-                                maximumFractionDigits: 2,
-                              }
-                            )
+                            "en-BD",
+                            {
+                              maximumFractionDigits: 2,
+                            }
+                          )
                           : CURRENTUTILITYAMOUNT && !lac
-                          ? CURRENTUTILITYAMOUNT.toLocaleString("en-BD", {
+                            ? CURRENTUTILITYAMOUNT.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
 
@@ -461,32 +464,32 @@ const MisBody = ({
                       <td>
                         {COMMISSIONPREVIOUSMONTH && lac
                           ? (COMMISSIONPREVIOUSMONTH / 100000).toLocaleString(
-                              "en-BD",
-                              {
-                                maximumFractionDigits: 2,
-                              }
-                            )
+                            "en-BD",
+                            {
+                              maximumFractionDigits: 2,
+                            }
+                          )
                           : COMMISSIONPREVIOUSMONTH && !lac
-                          ? COMMISSIONPREVIOUSMONTH.toLocaleString("en-BD", {
+                            ? COMMISSIONPREVIOUSMONTH.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
                     {commision && curCommision ? (
                       <td>
                         {COMMISSIONTHISMONTH && lac
                           ? (COMMISSIONTHISMONTH / 100000).toLocaleString(
-                              "en-BD",
-                              {
-                                maximumFractionDigits: 2,
-                              }
-                            )
+                            "en-BD",
+                            {
+                              maximumFractionDigits: 2,
+                            }
+                          )
                           : COMMISSIONTHISMONTH && !lac
-                          ? COMMISSIONTHISMONTH.toLocaleString("en-BD", {
+                            ? COMMISSIONTHISMONTH.toLocaleString("en-BD", {
                               maximumFractionDigits: 2,
                             })
-                          : "-"}
+                            : "-"}
                       </td>
                     ) : null}
 

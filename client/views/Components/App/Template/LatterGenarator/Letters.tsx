@@ -1,3 +1,4 @@
+import React from "react";
 import uuid from "react-uuid"
 // vaerables
 import StandardBankLtd from "./assets/StandardBankLtd-bangla.svg"
@@ -11,7 +12,7 @@ const Letter = ({ zeroBalance, bulkData, date, outlet, closeDate, branch }) => {
         index
       ) =>
         !zeroBalance && Balance === 0 ? null : (
-          <div div className="page">
+          <div className="page">
             <div className="columns container" style={{ padding: ".5rem" }}>
               <div className="column col-12">
                 <div className="columns col-oneline">
@@ -44,10 +45,10 @@ const Letter = ({ zeroBalance, bulkData, date, outlet, closeDate, branch }) => {
                       {GENDER === "M"
                         ? "Mr. " + AccountTitel
                         : GENDER === "F" && Spouse != null
-                        ? "Mrs. " + AccountTitel
-                        : GENDER === "F" && Spouse === null
-                        ? "Ms. " + AccountTitel
-                        : AccountTitel}
+                          ? "Mrs. " + AccountTitel
+                          : GENDER === "F" && Spouse === null
+                            ? "Ms. " + AccountTitel
+                            : AccountTitel}
                     </h3>
                     {Address ? <b>Address:</b> : null}
                     {Address ? Address.toString() : null}
@@ -60,7 +61,7 @@ const Letter = ({ zeroBalance, bulkData, date, outlet, closeDate, branch }) => {
                 <div className="column col-12">
                   <section
                     className="container passage"
-                    // style={{ lineHeight: "1.2rem" }}
+                  // style={{ lineHeight: "1.2rem" }}
                   >
                     সন্মানিত গ্রাহক,
                     <br /> আসসালামু আলাইকুম।

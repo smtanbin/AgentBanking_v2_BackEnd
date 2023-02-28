@@ -1,6 +1,7 @@
+import React from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
-import styles from "../../../../style/spectre.css"
+
 
 const Picker = ({
   date,
@@ -12,14 +13,12 @@ const Picker = ({
   setInit,
 }) => {
   const openWindowAsCanvas = () => {
-    const printContent = document.querySelector("#mis-body")
-    const WinPrint = window.open("", "", "width=2480px,height=3508px")
+    const printContent: any = document.querySelector("#mis-body")
+    const WinPrint: any = window.open("", "", "width=2480px,height=3508px")
     WinPrint.document.write(`
     <html>
       <head>
-        <style>
-          ${styles}
-        </style>
+
       </head>
       <body>
         ${printContent.innerHTML}
@@ -36,7 +35,7 @@ const Picker = ({
     WinPrint.focus()
   }
 
-  const handelDatePick = (e) => {
+  const handelDatePick = (e: any) => {
     const _date = e.target.value
     setDate(_date)
   }
@@ -48,7 +47,7 @@ const Picker = ({
     } else {
       setTableData(undefined)
       setLoading(true)
-      const baseurl = import.meta.env.VITE_API_URL
+      const baseurl = process.env.VITE_API_URL
 
       if (!date && !date.value) {
         setLoading(false)
@@ -100,7 +99,7 @@ const Picker = ({
   )
 }
 
-const DateFormar = (dateStr) => {
+const DateFormar = (dateStr: any) => {
   const [year, month] = dateStr.split("-")
 
   const monthNames = [

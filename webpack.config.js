@@ -10,6 +10,23 @@ module.exports = {
         use: "ts-loader",
         exclude: /node_modules/,
       },
+      {
+        test: /\.svg$/,
+        use: ["@svgr/webpack", "svg-inline-loader"],
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "url-loader",
+            options: { limit: 8192, name: "[name].[hash:8].[ext]" },
+          },
+        ],
+      },
     ],
   },
   mode: "development",

@@ -1,42 +1,42 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import Filter from "./Filter"
 import MisBody from "./MisBody"
 import Picker from "./Picker"
 
 const Mis = () => {
   // States
-  const [date, setDate] = useState()
-  const [address, setAddress] = useState(true)
-  const [dateOfOpening, setDateOfOpening] = useState(true)
+  const [date, setDate]: any = useState()
+  const [address, setAddress]: any = useState(true)
+  const [dateOfOpening, setDateOfOpening]: any = useState(true)
   // Accounts
-  const [accounts, setAccounts] = useState(true)
-  const [preAccounts, setPreAccounts] = useState(true)
-  const [curAccounts, setCurAccounts] = useState(true)
+  const [accounts, setAccounts]: any = useState(true)
+  const [preAccounts, setPreAccounts]: any = useState(true)
+  const [curAccounts, setCurAccounts]: any = useState(true)
   // Deposit
-  const [deposit, setDeposit] = useState(true)
-  const [preDeposit, setPreDeposit] = useState(true)
-  const [curDeposit, setCurDeposit] = useState(true)
+  const [deposit, setDeposit]: any = useState(true)
+  const [preDeposit, setPreDeposit]: any = useState(true)
+  const [curDeposit, setCurDeposit]: any = useState(true)
   // Remittance
-  const [remittance, setRemittance] = useState(true)
-  const [preRemittance, setPreRemittance] = useState(true)
-  const [curRemittance, setCurRemittance] = useState(true)
-  const [preNoOfRemittance, setPreNoOfRemittance] = useState(true)
-  const [curNoOfRemittance, setCurNoOfRemittance] = useState(true)
+  const [remittance, setRemittance]: any = useState(true)
+  const [preRemittance, setPreRemittance]: any = useState(true)
+  const [curRemittance, setCurRemittance]: any = useState(true)
+  const [preNoOfRemittance, setPreNoOfRemittance]: any = useState(true)
+  const [curNoOfRemittance, setCurNoOfRemittance]: any = useState(true)
   // Utility
-  const [utility, setUtility] = useState(true)
-  const [preUtility, setPreUtility] = useState(true)
-  const [curUtility, setCurUtility] = useState(true)
-  const [preNoOfUtility, setPreNoOfUtility] = useState(true)
-  const [curNoOfUtility, setCurNoOfUtility] = useState(true)
+  const [utility, setUtility]: any = useState(true)
+  const [preUtility, setPreUtility]: any = useState(true)
+  const [curUtility, setCurUtility]: any = useState(true)
+  const [preNoOfUtility, setPreNoOfUtility]: any = useState(true)
+  const [curNoOfUtility, setCurNoOfUtility]: any = useState(true)
   // Commision
-  const [commision, setCommision] = useState(true)
-  const [preCommision, setPreCommision] = useState(true)
-  const [curCommision, setCurCommision] = useState(true)
+  const [commision, setCommision]: any = useState(true)
+  const [preCommision, setPreCommision]: any = useState(true)
+  const [curCommision, setCurCommision]: any = useState(true)
   // Table Data
-  const [lac, setLac] = useState(1)
-  const [init, setInit] = useState(true)
-  const [loading, setLoading] = useState(false)
-  const [tableData, setTableData] = useState()
+  const [lac, setLac]: any = useState(1)
+  const [init, setInit]: any = useState(true)
+  const [loading, setLoading]: any = useState(false)
+  const [tableData, setTableData]: any = useState()
 
   // handeler
   const handelAddress = () => {
@@ -48,8 +48,8 @@ const Mis = () => {
   const handelDateOfOpening = () => {
     setDateOfOpening(!dateOfOpening)
   }
-  const handelAccounts = (value) => {
-    let bol
+  const handelAccounts = (value): any => {
+    let bol: boolean
     value == false ? (bol = value) : (bol = !accounts)
     setAccounts(bol)
     setPreAccounts(bol)
@@ -104,7 +104,7 @@ const Mis = () => {
           {!init ? (
             <Filter
               address={address}
-              handel={address}
+
               lac={lac}
               handelLac={handelLac}
               dateOfOpening={dateOfOpening}
@@ -161,7 +161,7 @@ const Mis = () => {
         </div>
         <div
           className="column col-10 col-md-8 col-sm-12 col-xs-12"
-          //   style={{ overflowX: "scroll" }}
+        //   style={{ overflowX: "scroll" }}
         >
           {init ? (
             <LandingPage />
