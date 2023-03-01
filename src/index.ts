@@ -6,6 +6,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import controller from "../controller/controller"
 import { createClient } from "../model/oracleClient"
+
 const app: express.Express = express()
 
 const corsOptions: cors.CorsOptions = {
@@ -35,12 +36,15 @@ async function runDB() {
 const configPath = path.join(__dirname, "../config.json")
 const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
 
+let port: any = null
+
 if (config.server.port) {
-  const port: any = config.server.port
-  app.listen(port, () => {
-    runDB()
-    console.log(`Server is listening on port: ${port}`)
-  })
+  port = config.server.port
 } else {
-  console.log("'config.json' file not found. or port not specified.")
+  port = process.env.PORT
 }
+
+app.listen(port, () => {
+  runDB()
+  console.log(`Server is listening on port: ${port}`)
+})

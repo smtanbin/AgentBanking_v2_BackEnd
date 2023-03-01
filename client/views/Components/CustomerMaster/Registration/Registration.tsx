@@ -6,7 +6,7 @@ import FirmProfile from "./FirmProfile"
 
 export const Registration = () => {
     const [custType, SetCustType] = useState("Individual")
-    function handlecustTypeChange(event) {
+    const handlecustTypeChange = (event: any) => {
         SetCustType(event.target.value)
     }
 

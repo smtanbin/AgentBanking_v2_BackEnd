@@ -3,19 +3,20 @@ import qs from "qs"
 import axios from "axios"
 import { encode } from "base-64"
 import Cookies from "universal-cookie"
+
 // Elements
-import logo from "../../assets/img/logo.svg"
+// import logo from "../../assets/img/logo.svg"
 import Animation from "./Animation/Animation"
 import { AuthContext } from "../../Context/AuthContext"
 
-const apiUrl = process.env.VITE_API_URL
+const apiUrl = "10.140.8.126:3001"
 
 export default function LoginUI() {
-  const cookies = new Cookies()
+  const cookies: any = new Cookies()
 
-  const [username, setUser] = useState("")
-  const [password, setPassword] = useState("")
-  const [errorClass, setErrorClass] = useState("")
+  const [username, setUser]: any = useState("")
+  const [password, setPassword]: any = useState("")
+  const [errorClass, setErrorClass]: any = useState()
   const authInfo: any = useContext(AuthContext)
   const updateAuth = authInfo.updateAuth
 
@@ -54,10 +55,10 @@ export default function LoginUI() {
       })
   }
 
-  const handelUser = (e) => setUser(e.target.value)
-  const handelPassword = (e) => setPassword(e.target.value)
+  const handelUser = (e: any) => setUser(e.target.value)
+  const handelPassword = (e: any) => setPassword(e.target.value)
   const removeError = () => setErrorClass()
-  const handleEnterKey = (e) => {
+  const handleEnterKey = (e: any) => {
     if (e.key === "Enter") networkRequest()
   }
 
@@ -77,7 +78,7 @@ export default function LoginUI() {
             /> */}
           </div>
           <div className="column col-lg-6 col-4 p-5x grid-lg p-centered material-shadow-v2 rounded">
-            <img src={logo} className="col-6 p-centered img-responsive" />
+            {/* <img src={logo} className="col-6 p-centered img-responsive" /> */}
             <br />
             <div className={`form-group column col-12 ${errorClass}`}>
               <label className="form-label">username Name</label>
@@ -86,7 +87,7 @@ export default function LoginUI() {
                 type="text"
                 placeholder="Name"
                 value={username}
-                onChange={(e) => handelUser(e)}
+                onChange={(e: any) => handelUser(e)}
               />
               <label className="form-label">Password</label>
               <input
@@ -94,7 +95,7 @@ export default function LoginUI() {
                 type="password"
                 placeholder="Name"
                 value={password}
-                onChange={(e) => handelPassword(e)}
+                onChange={(e: any) => handelPassword(e)}
               />
               <br />
               <label className="form-checkbox">

@@ -3,6 +3,8 @@ import bodyParser from "body-parser"
 import cors from "cors"
 
 // Other controllers
+import authRouter from "./auth/authRouter"
+import JWTVerifyToken from "./middleware/jwtMiddleware"
 import customercontroller from "./customer/customerRouter"
 
 const controller = express.Router() // create an instance of express controller
@@ -24,9 +26,12 @@ controller.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 
+controller.use("/login", authRouter)
+controller.use("/*", JWTVerifyToken)
+
 controller.use("/customer", customercontroller)
 
-controller.get("/", async (req: Request, res: Response) => {
+controller.use("/", async (req: Request, res: Response) => {
   res.json("Welcome to Restful API Power by Tanbin Hassan Bappi")
 })
 

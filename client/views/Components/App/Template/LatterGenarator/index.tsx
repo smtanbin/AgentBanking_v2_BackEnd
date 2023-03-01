@@ -6,8 +6,8 @@ import uuid from "react-uuid"
 import { ExportToExcel } from "./ExportToExcel"
 // vaerables
 // Icons
-import microsoftExcel from "../../../../../assets/icons/microsoftExcel.svg"
-import searchIcon from "../../../../../assets/icons/search.svg"
+// import microsoftExcel from "../../../../../assets/icons/microsoftExcel.svg"
+// import searchIcon from "../../../../../assets/icons/search.svg"
 import "./assets/index-c7273dbf.css"
 import Letter from "./Letters"
 
@@ -23,20 +23,20 @@ const LatterGenarator = () => {
   const [closeDate, setCloseDate] = useState("১৫ই মার্চ ২০২৩")
   const [branch, setBranch] = useState("ঝিনাইদহ ")
 
-  const handelOutlet = (e) => {
+  const handelOutlet = (e: any) => {
     setOutlet(e.target.value)
   }
-  const handelCloseDate = (e) => {
+  const handelCloseDate = (e: any) => {
     setCloseDate(e.target.value)
   }
-  const handelBranch = (e) => {
+  const handelBranch = (e: any) => {
     setBranch(e.target.value)
   }
-  const handelDate = (e) => {
+  const handelDate = (e: any) => {
     const _date = new Date(e.target.value).toDateString()
     setDate(_date)
   }
-  const handelAgent = (e) => {
+  const handelAgent = (e: any) => {
     setAgentNumber(e.target.value)
   }
   const handelZeroBalance = () => {
@@ -113,7 +113,7 @@ const LatterGenarator = () => {
                   }
                   onClick={handelSubmit}
                 >
-                  <img className="icon mr-2" src={searchIcon} />
+                  {/* <img className="icon mr-2" src={searchIcon} /> */}
                   Generator
                 </button>
               </div>
@@ -124,7 +124,7 @@ const LatterGenarator = () => {
                     className="btn btn-link-primary"
                     onClick={handelSubmit}
                   >
-                    <img className="icon mr-2" src={microsoftExcel} />
+                    {/* <img className="icon mr-2" src={microsoftExcel} /> */}
                     Download as Excel
                   </button>
                 </>

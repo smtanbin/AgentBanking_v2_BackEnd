@@ -1,25 +1,25 @@
 import React from "react";
 import uuid from "react-uuid"
 // vaerables
-import StandardBankLtd from "./assets/StandardBankLtd-bangla.svg"
-import signatures from "./assets/IMG.png"
+// import StandardBankLtd from "./assets/StandardBankLtd-bangla.svg"
+// import signatures from "./assets/IMG.png"
 
-const Letter = ({ zeroBalance, bulkData, date, outlet, closeDate, branch }) => {
+const Letter = ({ zeroBalance, bulkData, date, outlet, closeDate, branch }: any) => {
   return bulkData ? (
     bulkData.map(
       (
-        { AccountNo, AccountTitel, GENDER, Spouse, Contact, Address, Balance },
-        index
+        { AccountNo, AccountTitel, GENDER, Spouse, Contact, Address, Balance }: any,
+        index: number
       ) =>
         !zeroBalance && Balance === 0 ? null : (
           <div className="page">
             <div className="columns container" style={{ padding: ".5rem" }}>
               <div className="column col-12">
                 <div className="columns col-oneline">
-                  <img
+                  {/* <img
                     src={StandardBankLtd}
                     className="column col-5 col-md-5 logo img-responsive img-fit-contain"
-                  />
+                  /> */}
                   <div
                     className="column container col-4 col-md-4 col-ml-auto mr-0"
                     style={{ color: "#006d2c" }}
@@ -94,7 +94,7 @@ const Letter = ({ zeroBalance, bulkData, date, outlet, closeDate, branch }) => {
                     শুভ কামনায়,
                     <br />
                     <br />
-                    <img className="sig" src={signatures} />
+                    {/* <img className="sig" src={signatures} /> */}
                     <br />
                     <b>মনজুর মোরশেদ খান</b> <br />
                     ইন-চার্জ, এজেন্ট ব্যাংকিং ডিভিশন।
@@ -104,7 +104,7 @@ const Letter = ({ zeroBalance, bulkData, date, outlet, closeDate, branch }) => {
             </div>
             <p className="text-tiny text-muted text-center print-hide">
               <b> Page # </b>
-              {index + 1}/{Object.keys(bulkData).length + 1},<br />
+              {index}/{Object.keys(bulkData).length},<br />
               {uuid()},<br />
               {new Date().toDateString()}
             </p>

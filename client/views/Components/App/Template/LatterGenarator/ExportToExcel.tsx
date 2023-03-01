@@ -1,15 +1,15 @@
 import React from "react";
 import { toast } from "react-toastify"
 import ExcelJS from "exceljs"
-export const ExportToExcel = async (payload) => {
+export const ExportToExcel = async (payload: any) => {
   if (payload && payload.length > 0) {
     // Create a new workbook
-    const workbook = new ExcelJS.Workbook()
+    const workbook: any = new ExcelJS.Workbook()
     // Add a new worksheet
-    const worksheet = workbook.addWorksheet("Sheet1")
+    const worksheet: any = workbook.addWorksheet("Sheet1")
 
     // Define column headers and their data types
-    const headers = [
+    const headers: any = [
       { header: "AccountNo", key: "AccountNo", width: 20 },
       { header: "AccountTitel", key: "AccountTitel", width: 25 },
       { header: "Address", key: "Address", width: 35 },
@@ -42,23 +42,23 @@ export const ExportToExcel = async (payload) => {
     worksheet.columns = headers
 
     // Populate the worksheet with the data from payload
-    payload.forEach((row) => {
+    payload.forEach((row: any) => {
       // Add the data to the worksheet
       worksheet.addRow(row)
     })
 
     // Style header row
-    worksheet.getRow(1).eachCell((cell) => {
+    worksheet.getRow(1).eachCell((cell: any) => {
       cell.font = { bold: true }
     })
 
     // Save the workbook as an Excel file
-    await workbook.xlsx.writeBuffer().then((buffer) => {
-      const blob = new Blob([buffer], {
+    await workbook.xlsx.writeBuffer().then((buffer: any) => {
+      const blob: any = new Blob([buffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
+      const url: any = URL.createObjectURL(blob)
+      const a: any = document.createElement("a")
       a.href = url
       a.download = "payload.xlsx"
       a.click()

@@ -11,7 +11,7 @@ const Picker = ({
   setLoading,
   init,
   setInit,
-}) => {
+}: any) => {
   const openWindowAsCanvas = () => {
     const printContent: any = document.querySelector("#mis-body")
     const WinPrint: any = window.open("", "", "width=2480px,height=3508px")

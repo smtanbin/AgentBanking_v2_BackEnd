@@ -4,23 +4,23 @@ import axios from "axios"
 import { ToastContainer, toast } from "react-toastify"
 // Conponents
 import "react-toastify/dist/ReactToastify.css"
-import logo from "../../../../../assets/img/Standardbankltd-color.svg"
+// import logo from "../../../../../assets/img/Standardbankltd-color.svg"
 import { formatDate, formatDateString } from "../../../../../app/Formater"
-import styles from "../../../../../../src/style/spectre.css"
+// import styles from "../../../../../../src/style/spectre.css"
 // Icons
-import printerIcon from "../../../../../../src/assets/icons/printer.svg"
-import searchIcon from "../../../../../../src/assets/icons/search.svg"
+// import printerIcon from "../../../../../../src/assets/icons/printer.svg"
+// import searchIcon from "../../../../../../src/assets/icons/search.svg"
 export function Statement() {
   // States
-  const [fromDate, setFromDate] = useState(undefined)
-  const [toDate, setToDate] = useState(() => formatDate(new Date()))
-  const [accountNo, setAccountNo] = useState()
-  const [headerPayload, setHeaderPayload] = useState(undefined)
-  const [bodyPayload, setBodyPayload] = useState(undefined)
-  const [loadingState, setLoadingState] = useState(false)
+  const [fromDate, setFromDate]: any = useState(undefined)
+  const [toDate, setToDate]: any = useState(() => formatDate(new Date()))
+  const [accountNo, setAccountNo]: any = useState()
+  const [headerPayload, setHeaderPayload]: any = useState(undefined)
+  const [bodyPayload, setBodyPayload]: any = useState(undefined)
+  const [loadingState, setLoadingState]: any = useState(false)
 
   // Functions
-  const checkAccountNumber = (str) => {
+  const checkAccountNumber = (str: any) => {
     const pattern = /^108\d{8}$/
     if (pattern.test(str)) {
       return str
@@ -32,14 +32,14 @@ export function Statement() {
 
   /* Handeling Tools*/
 
-  const handelPrint = (str) => {
-    const printContent = document.querySelector("#document")
-    const WinPrint = window.open("", "", "width=2480px,height=3508px")
+  const handelPrint = () => {
+    const printContent: any = document.querySelector("#document")
+    const WinPrint: any = window.open("", "", "width=2480px,height=3508px")
     WinPrint.document.write(`
     <html>
       <head>
         <style>
-          ${styles}
+        
         </style>
       </head>
       <body>
@@ -57,17 +57,17 @@ export function Statement() {
     WinPrint.focus()
   }
 
-  const handelFromDate = (value) => {
+  const handelFromDate = (value: any) => {
     value = formatDateString(value)
     setFromDate(value)
   }
 
-  const handelToDate = (value) => {
+  const handelToDate = (value: any) => {
     value = formatDateString(value)
     setToDate(value)
   }
 
-  const handleACNumber = (event) => {
+  const handleACNumber = (event: any) => {
     const value = event.target.value
     if (value) {
       const inputValue = value.trim()
@@ -82,7 +82,7 @@ export function Statement() {
     setHeaderPayload(undefined)
     setBodyPayload(undefined)
 
-    const baseurl = import.meta.env.VITE_API_URL
+    const baseurl = process.env.VITE_API_URL
 
     if (!accountNo) {
       toast("Account Number can't be empty")
@@ -165,7 +165,7 @@ export function Statement() {
                 }
                 onClick={handelSubmit}
               >
-                <img className="icon mr-2" src={searchIcon} />
+                {/* <img className="icon mr-2" src={searchIcon} /> */}
                 Search
               </button>
               <button
@@ -176,7 +176,7 @@ export function Statement() {
                 }
                 onClick={handelPrint}
               >
-                <img className="icon mr-2" src={printerIcon} />
+                {/* <img className="icon mr-2" src={printerIcon} /> */}
                 Print
               </button>
             </div>
@@ -190,10 +190,10 @@ export function Statement() {
               <div className="card  columns col-12 p-1 bg-gray">
                 <div className="coloum print-show">
                   <div className="columns col-oneline mx-2 ">
-                    <img
+                    {/* <img
                       src={logo}
                       className="column col-6 col-md-6 img-responsive img-fit-contain "
-                    />
+                    /> */}
 
                     <div
                       className="column col-4 col-md-4 col-ml-auto"
@@ -287,7 +287,7 @@ export function Statement() {
                   </thead>
                   <tbody>
                     <tr className="column col-12 active">
-                      <td colSpan="5" className="text-tiny text-right">
+                      <td colSpan={5} className="text-tiny text-right">
                         Previous Balance
                       </td>
                       <td className="text-tiny text-bold text-right">
@@ -299,7 +299,7 @@ export function Statement() {
                             })
                             : 0}
                       </td>
-                      <td colSpan="1"></td>
+                      <td colSpan={1}></td>
                     </tr>
                     {!bodyPayload || !Array.isArray(bodyPayload) ? (
                       <></>
@@ -346,7 +346,7 @@ export function Statement() {
                       )
                     )}
                     <tr className="active column col-12">
-                      <td className="text-bold text-left  col-4" colSpan="3">
+                      <td className="text-bold text-left  col-4" colSpan={3}>
                         Total
                       </td>
                       <td className="text-bold text-right text-tiny col-1">
@@ -370,7 +370,7 @@ export function Statement() {
                   <tfoot>
                     <tr>
                       <td
-                        colSpan="7"
+                        colSpan={7}
                         className="text-bold text-tiny col-12 p-2"
                       >
                         This is an electronically generated report, hence does

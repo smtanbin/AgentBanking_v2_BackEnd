@@ -35,24 +35,24 @@ const MisBody = ({
   /*Table Data  Variables*/
   handelAccounts,
   tableData,
-}) => {
+}: any) => {
   // Counters
   // Currents
-  let currentNoOfAccountCounter = 0
-  let currentDepositCounter = 0
-  let currentNoOfRemittanceAmountCounter = 0
-  let currentRemittanceAmountCounter = 0
-  let currentNoOfUtilityCounter = 0
-  let currentUtilityAmountCounter = 0
-  let currentCommisionCounter = 0
+  let currentNoOfAccountCounter: number = 0
+  let currentDepositCounter: number = 0
+  let currentNoOfRemittanceAmountCounter: number = 0
+  let currentRemittanceAmountCounter: number = 0
+  let currentNoOfUtilityCounter: number = 0
+  let currentUtilityAmountCounter: number = 0
+  let currentCommisionCounte: number = 0
   // Precious
-  let preciousNoOfAccountCounter = 0
-  let preciousDepositCounter = 0
-  let preciousNoOfRemittanceAmountCounter = 0
-  let preciousRemittanceAmountCounter = 0
-  let preciousNoOfUtilityCounter = 0
-  let preciousUtilityAmountCounter = 0
-  let preciousCommisionCounter = 0
+  let preciousNoOfAccountCounter: number = 0
+  let preciousDepositCounter: number = 0
+  let preciousNoOfRemittanceAmountCounter: number = 0
+  let preciousRemittanceAmountCounter: number = 0
+  let preciousNoOfUtilityCounter: number = 0
+  let preciousUtilityAmountCounter: number = 0
+  let preciousCommisionCounter: number = 0
 
   return (
     <section className="m-2" id="mis-body" style={{ width: "100%" }}>
@@ -302,8 +302,8 @@ const MisBody = ({
                   CURRENTUTILITYAMOUNT,
                   COMMISSIONTHISMONTH,
                   COMMISSIONPREVIOUSMONTH,
-                },
-                index
+                }: any,
+                index: number
               ) => {
                 currentNoOfAccountCounter += CURRENTNOOFACCOUNT
                 currentDepositCounter += CURRENTBALANCE
@@ -311,7 +311,7 @@ const MisBody = ({
                 currentRemittanceAmountCounter += CURRENTREMITTANCEAMOUNT
                 currentNoOfUtilityCounter += CURRENTNOOFUTILITY
                 currentUtilityAmountCounter += 0
-                currentCommisionCounter += 0
+                currentCommisionCounte += 0
                 // Precious
                 preciousNoOfAccountCounter += PREVIOUSNOOFACCOUNT
                 preciousDepositCounter += PREVIOUSBALANCE

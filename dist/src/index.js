@@ -78,13 +78,14 @@ function runDB() {
 }
 var configPath = path_1.default.join(__dirname, "../config.json");
 var config = JSON.parse(fs_1.default.readFileSync(configPath, "utf8"));
+var port = null;
 if (config.server.port) {
-    var port_1 = config.server.port;
-    app.listen(port_1, function () {
-        runDB();
-        console.log("Server is listening on port: ".concat(port_1));
-    });
+    port = config.server.port;
 }
 else {
-    console.log("'config.json' file not found. or port not specified.");
+    port = process.env.PORT;
 }
+app.listen(port, function () {
+    runDB();
+    console.log("Server is listening on port: ".concat(port));
+});

@@ -5,17 +5,17 @@ import React, { useState } from "react"
 
 const CompanyProfile = () => {
 
-    const [maritalType, SetMaritalType] = useState("Single")
-    const [permanentAddr, SetPermanentAddrType] = useState(false)
-    const [mailAddr, SetMailAddrType] = useState(false)
+    const [maritalType, SetMaritalType]: any = useState("Single")
+    const [permanentAddr, SetPermanentAddrType]: any = useState(false)
+    const [mailAddr, SetMailAddrType]: any = useState(false)
 
-    function handleMaritalTypeChange(event: any) {
+    const handleMaritalTypeChange = (event: any) => {
         SetMaritalType(event.target.value)
     }
-    function handlePermanentAddrChange() {
+    const handlePermanentAddrChange = () => {
         SetPermanentAddrType(!permanentAddr)
     }
-    function handleMailAddrChange() {
+    const handleMailAddrChange = () => {
         SetMailAddrType(!mailAddr)
     }
 

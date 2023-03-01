@@ -7,14 +7,9 @@ const IndividualProfile = () => {
 
     const [maritalType, SetMaritalType] = useState("Single")
 
-    function handleMaritalTypeChange(event) {
+    const handleMaritalTypeChange = (event: any) => {
         SetMaritalType(event.target.value)
     }
-    // function handleMaritalTypeChange(event) {
-    //     SetMaritalType(event.target.value)
-    // }
-
-
 
 
 

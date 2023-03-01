@@ -53,7 +53,7 @@ const Filter = ({
   handelCommision,
   setPreCommision,
   setCurCommision,
-}) => {
+}: any) => {
   // handeler
 
   const HandelPreAccounts = () => {

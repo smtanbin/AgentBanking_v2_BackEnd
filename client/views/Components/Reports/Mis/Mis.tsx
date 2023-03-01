@@ -48,21 +48,21 @@ const Mis = () => {
   const handelDateOfOpening = () => {
     setDateOfOpening(!dateOfOpening)
   }
-  const handelAccounts = (value): any => {
+  const handelAccounts = (value: any) => {
     let bol: boolean
     value == false ? (bol = value) : (bol = !accounts)
     setAccounts(bol)
     setPreAccounts(bol)
     setCurAccounts(bol)
   }
-  const handelDeposit = (value) => {
+  const handelDeposit = (value: any) => {
     let bol
     value == false ? (bol = value) : (bol = !deposit)
     setDeposit(bol)
     setPreDeposit(bol)
     setCurDeposit(bol)
   }
-  const handelRemittance = (value) => {
+  const handelRemittance = (value: any) => {
     let bol
     value == false ? (bol = value) : (bol = !remittance)
     setRemittance(bol)
@@ -71,7 +71,7 @@ const Mis = () => {
     setPreNoOfRemittance(bol)
     setCurNoOfRemittance(bol)
   }
-  const handelUtility = (value) => {
+  const handelUtility = (value: any) => {
     let bol
     value == false ? (bol = value) : (bol = !utility)
     setUtility(bol)
@@ -80,7 +80,7 @@ const Mis = () => {
     setPreNoOfUtility(bol)
     setCurNoOfUtility(bol)
   }
-  const handelCommision = (value) => {
+  const handelCommision = (value: any) => {
     let bol
     value == false ? (bol = value) : (bol = !commision)
     setCommision(bol)

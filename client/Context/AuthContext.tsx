@@ -5,9 +5,9 @@ import Cookies from 'universal-cookie';
 
 export const AuthContext = createContext({})
 const cookies = new Cookies
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }: any) => {
 
-    const [auth, setAuth] = useReducer((oldState, newState) => newState, {
+    const [auth, setAuth] = useReducer((oldState: any, newState: any) => newState, {
         token: undefined,
         user: null,
         validitations: false
