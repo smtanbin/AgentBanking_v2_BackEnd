@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --watch --preserveWatchOutput",
-    "dev": "nodemon dist/src/index.js & webpack -w"
+    "build": "tsc --watch --preserveWatchOutput && webpack -w",
+    "dev": "nodemon dist/src/index.js "
   },
   "keywords": [],
   "author": "Tanbin Hassan Bappi",

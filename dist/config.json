@@ -5,7 +5,7 @@
     "connectString": "192.168.10.2:1521/ABSDB"
   },
   "server": {
-    "port": 3001,
+    "port": 8080,
     "security": {
       "jkey": "fxny6q36y6uim85sm75u",
       "expires": "2000",

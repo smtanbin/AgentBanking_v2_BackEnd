@@ -40,62 +40,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var body_parser_1 = __importDefault(require("body-parser"));
-var cors_1 = __importDefault(require("cors"));
-// Other controllers
-var authRouter_1 = __importDefault(require("./auth/authRouter"));
-var chartRouter_1 = __importDefault(require("./dashboardData/chartRouter"));
-var tableDataRouter_1 = __importDefault(require("./dashboardData/tableDataRouter"));
-var customerRouter_1 = __importDefault(require("./customer/customerRouter"));
-var reportRouter_1 = __importDefault(require("./reports/reportRouter"));
-var controller = express_1.default.Router(); // create an instance of express controller
-var corsOptions = {
-    origin: "*",
-    optionsSuccessStatus: 200,
-};
-controller.use((0, cors_1.default)(corsOptions));
-controller.use(body_parser_1.default.json());
-// middleware
-controller.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", ["GET", "POST", "PATCH", "DELETE"]);
-    next();
-});
-controller.use("*", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+var reportFunction_1 = __importDefault(require("./reportFunction"));
+var reportRouter = express_1.default.Router();
+var reportConst = new reportFunction_1.default();
+reportRouter.post("/mis", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var date, result, err_1;
     return __generator(this, function (_a) {
-        console.log(req.baseUrl);
-        // console.log("Authorization: ", req.headers.authorization)
-        // console.log("Body: ", req.body)
-        // console.log("cookies: ", req.headers.refrash_key)
-        next();
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                date = req.body.date;
+                console.log(date);
+                /* error handling and validation to the request parameters*/
+                if (!date) {
+                    throw new Error("Date are required.");
+                }
+                /* check to ensure that date is a string before passing it to reportConst.get() function.*/
+                if (typeof date !== "string") {
+                    throw new Error("Invalid parameters");
+                }
+                return [4 /*yield*/, reportConst.mis(date)];
+            case 1:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 3];
+            case 2:
+                err_1 = _a.sent();
+                console.error(err_1);
+                res.status(500).send("Error: " + err_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
     });
 }); });
-controller.use("/login", authRouter_1.default);
-// controller.use("*", JWTVerifyToken)
-// Dashboard
-controller.use("/dashboard/charts", chartRouter_1.default);
-controller.use("/dashboard/tables", tableDataRouter_1.default);
-// Routers
-controller.use("/customer", customerRouter_1.default);
-controller.use("/reports", reportRouter_1.default);
-controller.get("/test", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.json("Welcome to Restful API Power by Tanbin Hassan Bappi");
-        return [2 /*return*/];
-    });
-}); });
-controller.use("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.json("Welcome to Restful API Power by Tanbin Hassan Bappi");
-        return [2 /*return*/];
-    });
-}); });
-controller.use("/*", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.status(404).json({ Error: "Invalid Address" });
-        return [2 /*return*/];
-    });
-}); });
-exports.default = controller;
+exports.default = reportRouter;

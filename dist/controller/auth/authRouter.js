@@ -80,48 +80,6 @@ authRouter.post("/check", function (req, res) { return __awaiter(void 0, void 0,
         }
     });
 }); });
-// authRouter.post("/auth", async (req, res) => {
-//   try {
-//     const { username, password } = req.body
-//     /* error handling and validation to the request parameters*/
-//     if (!username) {
-//       res.status(500).json("Error: Username are required")
-//       return
-//     }
-//     const userCheck: boolean = await oauth.check(username)
-//     if (!userCheck) {
-//       res.status(500).json("Error: User not found")
-//       return
-//     }
-//     if (!password) {
-//       res.status(500).json("Error: Password are required")
-//       return
-//     }
-//     /* check to ensure that username is a string before passing it to oauth.get() function.*/
-//     if (typeof username !== "string" && typeof password !== "string") {
-//       res.status(500).json("Error: Invalid parameters type must be a string")
-//       return
-//     }
-//     const verified: boolean = await oauth.verify(username, password)
-//     if (!verified) {
-//       res.status(500).json("Error: password not match")
-//       return
-//     }
-//     const userInfo: any = await oauth.user(username)
-//     const { USERNAME, ROLEID }: any = userInfo[0]
-//     const configPath = path.join(__dirname, "../../", "config.json") //config file
-//     const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
-//     const _tokenKey = config.server.security.jkey || process.env.JKEY
-//     // Generate JWT token
-//     const token = jwt.sign({ username: USERNAME, roll: ROLEID }, _tokenKey)
-//     // Send token as response
-//     res.json({ token })
-//   } catch (err) {
-//     console.error("Error: " + err)
-//     res.status(500).json("Error: " + err)
-//     return
-//   }
-// })
 authRouter.post("/auth", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, username, password, userCheck, verified, userInfo, _b, USERNAME, ROLEID, configPath, config, _tokenKey, token, refreshToken, refresh_ststus, err_2;
     return __generator(this, function (_c) {
@@ -174,7 +132,8 @@ authRouter.post("/auth", function (req, res) { return __awaiter(void 0, void 0, 
                     res.status(500).json("Error: unable to store refresh token");
                     return [2 /*return*/];
                 }
-                // Send token and refresh token as response
+                // Send token and refresh token as response, along with a cookie
+                res.cookie("auth_token", token, { httpOnly: true, secure: true });
                 res.json({ token: token, refreshToken: refreshToken });
                 return [3 /*break*/, 6];
             case 5:

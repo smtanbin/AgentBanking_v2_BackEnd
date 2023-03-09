@@ -9,6 +9,7 @@ var fs_1 = __importDefault(require("fs"));
 var JWTVerifyToken = function (req, res, next) {
     var authHeader = req.headers["authorization"];
     var token = authHeader && authHeader.split(" ")[1];
+    console.log("Access");
     if (!token) {
         return res.status(401).json({ message: "Access token not found" });
     }
@@ -17,9 +18,12 @@ var JWTVerifyToken = function (req, res, next) {
     var jwtConfig = config.server.security;
     var jkey = jwtConfig.jkey || process.env.JKEY;
     jsonwebtoken_1.default.verify(token, jkey, function (err, user) {
+        var _a;
         if (err) {
+            console.log(err);
             if (err.name === "TokenExpiredError") {
-                var refreshToken = req.cookies.refreshToken;
+                // const refreshToken = req.cookies.refreshToken
+                var refreshToken = (_a = req.headers.refrash_key) === null || _a === void 0 ? void 0 : _a.toString();
                 if (!refreshToken) {
                     return res.status(401).json({ message: "Refresh token not found" });
                 }

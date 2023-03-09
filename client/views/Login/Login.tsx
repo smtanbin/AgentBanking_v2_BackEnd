@@ -27,7 +27,7 @@ export default function LoginUI() {
   })
   const config = {
     method: "post",
-    url: apiUrl + "/api/login/oauth",
+    url: apiUrl + "/api/login/auth",
     headers: {
       Accept: "*/*",
       "X-Requested-With": "XMLHttpRequest",

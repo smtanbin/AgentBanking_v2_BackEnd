@@ -19,6 +19,8 @@ const JWTVerifyToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers["authorization"]
   const token = authHeader && authHeader.split(" ")[1]
 
+  console.log("Access")
+
   if (!token) {
     return res.status(401).json({ message: "Access token not found" })
   }
@@ -31,8 +33,10 @@ const JWTVerifyToken = (req: Request, res: Response, next: NextFunction) => {
 
   jwt.verify(token, jkey!, (err: jwt.VerifyErrors | null, user: any) => {
     if (err) {
+      console.log(err)
       if (err.name === "TokenExpiredError") {
-        const refreshToken = req.cookies.refreshToken
+        // const refreshToken = req.cookies.refreshToken
+        const refreshToken = req.headers.refrash_key?.toString()
         if (!refreshToken) {
           return res.status(401).json({ message: "Refresh token not found" })
         }
