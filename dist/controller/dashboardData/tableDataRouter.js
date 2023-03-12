@@ -69,7 +69,7 @@ tableDataRouter.get("/event", function (req, res) { return __awaiter(void 0, voi
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, tableData.Events()];
+                return [4 /*yield*/, tableData.TransductionEvents()];
             case 1:
                 result = _a.sent();
                 res.send(result);

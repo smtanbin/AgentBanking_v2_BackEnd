@@ -16,7 +16,7 @@ tableDataRouter.get("/pendingEvent", async (req, res) => {
 })
 tableDataRouter.get("/event", async (req, res) => {
   try {
-    const result = await tableData.Events()
+    const result = await tableData.TransductionEvents()
     res.send(result)
   } catch (err) {
     console.error(err)

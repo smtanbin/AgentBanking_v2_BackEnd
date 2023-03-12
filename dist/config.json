@@ -2,7 +2,7 @@
   "database": {
     "user": "tanbin",
     "password": "J@ria774234",
-    "connectString": "192.168.10.2:1521/ABSDB"
+    "connectString": "10.130.102.103:1521/ABSPDB"
   },
   "server": {
     "port": 8080,

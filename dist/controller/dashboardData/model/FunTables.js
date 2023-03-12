@@ -49,7 +49,7 @@ var FunTables = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        sql = "SELECT * FROM AGENT_BANKING.D_TRANSACTIONINFO";
+                        sql = "SELECT TOTAL ,AMT ,E AS EVENT,STATUS  FROM AGENT_BANKING.D_TRANSACTIONINFO";
                         bindParams = [];
                         return [4 /*yield*/, (0, oracleClient_1.default)(sql, bindParams)];
                     case 1:
@@ -59,15 +59,14 @@ var FunTables = /** @class */ (function () {
             });
         });
     };
-    FunTables.prototype.Events = function () {
+    FunTables.prototype.TransductionEvents = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, bindParams, payload;
+            var sql, payload;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        sql = "SELECT 'Cash Withdrawal' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Cash Withdrawal' UNION ALL SELECT 'Online Cheque Payment' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Online Cheque Payment' UNION ALL SELECT 'Cheque Book Fee' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Cheque Book Fee' UNION ALL SELECT 'Cash Deposit' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Cash Deposit' UNION ALL SELECT 'Outward BEFTN' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Outward BEFTN' UNION ALL SELECT 'Inward BEFTN' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Inward BEFTN' UNION ALL SELECT 'Utility Payment' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Utility Payment' UNION ALL SELECT 'Instant Inward Foreign Remittance' AS PARTICULAR, COUNT(TRANS_NO) AS NO, SUM(PAY_AMT) AS AMT FROM AGENT_BANKING.GL_TRANS_MST WHERE PARTICULAR = 'Instant Inward Foreign Remittance' UNION ALL SELECT 'Account Opened' AS EVENT, COUNT(MPHONE) AS NO, SUM(BALANCE_M) AS AMT FROM AGENT_BANKING.REGINFO WHERE TRUNC(REG_DATE) = TRUNC(SYSDATE) AND STATUS != 'R' UNION ALL SELECT 'Remittance' AS EVENT, COUNT(REM_ID) AS NO, SUM(SEN_REM_AMT) AS AMT FROM AGENT_BANKING.REMITTANCE_INFO WHERE TRUNC(AUTHO_DATE) = TRUNC(SYSDATE) AND STATUS != 'R'";
-                        bindParams = [];
-                        return [4 /*yield*/, (0, oracleClient_1.default)(sql, bindParams)];
+                        sql = "SELECT\n\t'Cash Withdrawal' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Cash Withdrawal'\nUNION ALL\nSELECT\n\t'Online Cheque Payment' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Online Cheque Payment'\nUNION ALL\nSELECT\n\t'Cheque Book Fee' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Cheque Book Fee'\nUNION ALL\nSELECT\n\t'Cash Deposit' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Cash Deposit'\nUNION ALL\nSELECT\n\t'Outward BEFTN' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Outward BEFTN'\nUNION ALL\nSELECT\n\t'Inward BEFTN' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Inward BEFTN'\nUNION ALL\nSELECT\n\t'Utility Payment' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Utility Payment'\nUNION ALL\nSELECT\n\t'Instant Inward Foreign Remittance' AS PARTICULAR,\n\tCOUNT(TRANS_NO) AS NO,\n\tSUM(PAY_AMT) AS AMT\nFROM\n\tAGENT_BANKING.GL_TRANS_MST\nWHERE\n\tPARTICULAR = 'Instant Inward Foreign Remittance'\nUNION ALL\nSELECT\n\t'Account Opened' AS EVENT,\n\tCOUNT(MPHONE) AS NO,\n\tSUM(BALANCE_M) AS AMT\nFROM\n\tAGENT_BANKING.REGINFO\nWHERE\n\tTRUNC(REG_DATE) = TRUNC(SYSDATE)\n\tAND STATUS != 'R'\nUNION ALL\nSELECT\n\t'Remittance' AS EVENT,\n\tCOUNT(REM_ID) AS NO,\n\tSUM(SEN_REM_AMT) AS AMT\nFROM\n\tAGENT_BANKING.REMITTANCE_INFO\nWHERE\n\tTRUNC(AUTHO_DATE) = TRUNC(SYSDATE)\n\tAND STATUS != 'R'";
+                        return [4 /*yield*/, (0, oracleClient_1.default)(sql)];
                     case 1:
                         payload = _a.sent();
                         return [2 /*return*/, payload.rows];

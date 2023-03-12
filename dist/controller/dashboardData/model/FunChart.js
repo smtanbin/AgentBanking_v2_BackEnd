@@ -43,6 +43,53 @@ var oracleClient_1 = __importDefault(require("../../../model/oracleClient"));
 var ChartsData = /** @class */ (function () {
     function ChartsData() {
     }
+    ChartsData.prototype.TotalDebitCreditCurrent = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var count, sql, bindParams, payload, e_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, (0, oracleClient_1.default)("SELECT count(*) AS COUNT FROM AGENT_BANKING.GL_TRANS_DTL")];
+                    case 1:
+                        count = _a.sent();
+                        sql = null;
+                        if (count.rows[0].COUNT !== 0) {
+                            sql = "WITH all_hours (hour) AS (\n  SELECT TO_CHAR(TO_DATE('09:00', 'HH24:MI'), 'HH24') + LEVEL - 1\n  FROM DUAL\n  CONNECT BY LEVEL <= TO_CHAR(TO_DATE('18:00', 'HH24:MI'), 'HH24') - TO_CHAR(TO_DATE('09:00', 'HH24:MI'), 'HH24') + 1\n)\nSELECT all_hours.hour AS HOUR, NVL(SUM(dt.DR_AMT), 0) AS DR, NVL(SUM(dt.CR_AMT), 0) AS CR\nFROM all_hours\nLEFT JOIN (\n  SELECT BALANCE_MPHONE, CR_AMT, DR_AMT, TO_NUMBER(TO_CHAR(TRANS_DATE, 'HH24')) AS CURRENT_HOUR\n  FROM AGENT_BANKING\n  WHERE BALANCE_MPHONE IS NOT NULL AND TRANS_DATE >= TRUNC(SYSDATE)\n) dt ON all_hours.hour = dt.CURRENT_HOUR\nGROUP BY all_hours.hour\nORDER BY all_hours.hour";
+                        }
+                        else {
+                            sql = "WITH all_hours (hour) AS (\n  SELECT TO_CHAR(TO_DATE('09:00', 'HH24:MI'), 'HH24') + LEVEL - 1\n  FROM DUAL\n  CONNECT BY LEVEL <= TO_CHAR(TO_DATE('18:00', 'HH24:MI'), 'HH24') - TO_CHAR(TO_DATE('09:00', 'HH24:MI'), 'HH24') + 1\n)\nSELECT all_hours.hour AS HOUR, NVL(SUM(dt.DR_AMT), 0) AS DR, NVL(SUM(dt.CR_AMT), 0) AS CR\nFROM all_hours\nLEFT JOIN (\n  SELECT BALANCE_MPHONE, CR_AMT, DR_AMT, TO_NUMBER(TO_CHAR(TRANS_DATE, 'HH24')) AS CURRENT_HOUR\n  FROM AGENT_BANKING.GL_TRANS_DTL_OLD\n  WHERE BALANCE_MPHONE IS NOT NULL AND TRANS_DATE >= TRUNC(SYSDATE)\n) dt ON all_hours.hour = dt.CURRENT_HOUR\nGROUP BY all_hours.hour\nORDER BY all_hours.hour";
+                        }
+                        bindParams = [];
+                        return [4 /*yield*/, (0, oracleClient_1.default)(sql, bindParams)];
+                    case 2:
+                        payload = _a.sent();
+                        return [2 /*return*/, payload.rows];
+                    case 3:
+                        e_1 = _a.sent();
+                        console.log(e_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ChartsData.prototype.TotalDebitCreditPrevious = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, bindParams, payload;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sql = "WITH all_hours (hour) AS (\n  SELECT TO_CHAR(TO_DATE('09:00', 'HH24:MI'), 'HH24') + LEVEL - 1\n  FROM DUAL\n  CONNECT BY LEVEL <= TO_CHAR(TO_DATE('18:00', 'HH24:MI'), 'HH24') - TO_CHAR(TO_DATE('09:00', 'HH24:MI'), 'HH24') + 1\n)\nSELECT all_hours.hour AS HOUR, NVL(SUM(dt.DR_AMT), 0) AS DR, NVL(SUM(dt.CR_AMT), 0) AS CR\nFROM all_hours\nLEFT JOIN (\n  SELECT BALANCE_MPHONE, CR_AMT, DR_AMT, TO_NUMBER(TO_CHAR(TRANS_DATE, 'HH24')) AS CURRENT_HOUR\n  FROM AGENT_BANKING.GL_TRANS_DTL_OLD\n  WHERE BALANCE_MPHONE IS NOT NULL AND TRANS_DATE >= TRUNC((SELECT TRANS_DATE FROM (SELECT TRANS_DATE FROM AGENT_BANKING.GL_TRANS_DTL_OLD WHERE TRUNC(TRANS_DATE) != TRUNC(SYSDATE) ORDER BY TRANS_DATE DESC) WHERE ROWNUM = 1))\n) dt ON all_hours.hour = dt.CURRENT_HOUR\nGROUP BY all_hours.hour\nORDER BY all_hours.hour";
+                        bindParams = [];
+                        return [4 /*yield*/, (0, oracleClient_1.default)(sql, bindParams)];
+                    case 1:
+                        payload = _a.sent();
+                        return [2 /*return*/, payload.rows];
+                }
+            });
+        });
+    };
     ChartsData.prototype.balanceChart = function () {
         return __awaiter(this, void 0, void 0, function () {
             var sql, bindParams, payload;

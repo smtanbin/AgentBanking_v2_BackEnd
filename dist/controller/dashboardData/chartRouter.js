@@ -63,4 +63,44 @@ chartRouter.get("/balanceChart", function (req, res) { return __awaiter(void 0, 
         }
     });
 }); });
+chartRouter.get("/TotalDebitCreditPrevious", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, charts.TotalDebitCreditPrevious()];
+            case 1:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 3];
+            case 2:
+                err_2 = _a.sent();
+                console.error(err_2);
+                res.status(500).send("Error: " + err_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+chartRouter.get("/TotalDebitCreditCurrent", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, err_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, charts.TotalDebitCreditCurrent()];
+            case 1:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 3];
+            case 2:
+                err_3 = _a.sent();
+                console.error(err_3);
+                res.status(500).send("Error: " + err_3);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
 exports.default = chartRouter;
