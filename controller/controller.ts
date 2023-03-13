@@ -8,6 +8,7 @@ import JWTVerifyToken from "./middleware/jwtMiddleware"
 import chartsDataRouter from "./dashboardData/chartRouter"
 import tableDataRouter from "./dashboardData/tableDataRouter"
 import customerRouter from "./customer/customerRouter"
+import eftReportRouter from "./eftReports/eftReportRouter"
 import reportRouter from "./reports/reportRouter"
 
 const controller = express.Router() // create an instance of express controller
@@ -49,6 +50,7 @@ controller.use("/dashboard/tables", tableDataRouter)
 // Routers
 controller.use("/customer", customerRouter)
 controller.use("/reports", reportRouter)
+controller.use("/eft", eftReportRouter)
 
 controller.get("/test", async (req: Request, res: Response) => {
   res.json("Welcome to Restful API Power by Tanbin Hassan Bappi")

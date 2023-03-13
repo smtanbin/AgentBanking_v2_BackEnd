@@ -47,6 +47,7 @@ var authRouter_1 = __importDefault(require("./auth/authRouter"));
 var chartRouter_1 = __importDefault(require("./dashboardData/chartRouter"));
 var tableDataRouter_1 = __importDefault(require("./dashboardData/tableDataRouter"));
 var customerRouter_1 = __importDefault(require("./customer/customerRouter"));
+var eftReportRouter_1 = __importDefault(require("./eftReports/eftReportRouter"));
 var reportRouter_1 = __importDefault(require("./reports/reportRouter"));
 var controller = express_1.default.Router(); // create an instance of express controller
 var corsOptions = {
@@ -80,6 +81,7 @@ controller.use("/dashboard/tables", tableDataRouter_1.default);
 // Routers
 controller.use("/customer", customerRouter_1.default);
 controller.use("/reports", reportRouter_1.default);
+controller.use("/eft", eftReportRouter_1.default);
 controller.get("/test", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.json("Welcome to Restful API Power by Tanbin Hassan Bappi");

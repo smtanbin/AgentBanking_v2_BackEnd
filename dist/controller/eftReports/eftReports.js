@@ -40,25 +40,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var customerModel_1 = __importDefault(require("./customerModel"));
-var customerRouter = express_1.default.Router();
-var casmas = new customerModel_1.default();
-customerRouter.post("/search", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var params, result, err_1;
+var eftModel_1 = __importDefault(require("./eftModel"));
+var eftReportRouter = express_1.default.Router();
+var eft = new eftModel_1.default();
+eftReportRouter.get("/list", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                params = req.body.params;
-                /* error handling and validation to the request parameters*/
-                if (!params) {
-                    throw new Error("Params are required.");
-                }
-                /* check to ensure that params is a string before passing it to casmas.get() function.*/
-                if (typeof params !== "string") {
-                    throw new Error("Invalid parameters");
-                }
-                return [4 /*yield*/, casmas.get(params)];
+                return [4 /*yield*/, eft.list()];
             case 1:
                 result = _a.sent();
                 res.send(result);
@@ -72,4 +63,4 @@ customerRouter.post("/search", function (req, res) { return __awaiter(void 0, vo
         }
     });
 }); });
-exports.default = customerRouter;
+exports.default = eftReportRouter;

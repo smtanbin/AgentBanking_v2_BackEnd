@@ -41,11 +41,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var authFunction_1 = __importDefault(require("./authFunction"));
+var authModel_1 = __importDefault(require("./authModel"));
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
 var authRouter = express_1.default.Router();
-var oauth = new authFunction_1.default();
+var oauth = new authModel_1.default();
 /* This is an endpoint that listens to POST requests on the "/check" route. When a request is received, it first extracts the "username" parameter from the request body. It then performs some error handling and validation to ensure that the "username" parameter is not empty and is a string.
 
 After validating the parameter, it calls the "check" function of the "oauth" object with the "username" parameter and waits for the function to return. The result returned from the function is then sent back as the response to the original request.

@@ -39,37 +39,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var customerModel_1 = __importDefault(require("./customerModel"));
-var customerRouter = express_1.default.Router();
-var casmas = new customerModel_1.default();
-customerRouter.post("/search", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var params, result, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                params = req.body.params;
-                /* error handling and validation to the request parameters*/
-                if (!params) {
-                    throw new Error("Params are required.");
+var oracleClient_1 = __importDefault(require("../../model/oracleClient"));
+var customer = /** @class */ (function () {
+    function customer() {
+    }
+    customer.prototype.get = function (param) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, bindParams, payload;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sql = "SELECT *  FROM AGENT_BANKING.CUSTIDINFO  c  LEFT JOIN AGENT_BANKING.REGINFO r ON c.CUST_ID = r.CUST_ID  WHERE    c.NID_NO = :item OR c.CON_MOB = :item OR r.MPHONE = :item OR r.CUST_ID = :item";
+                        bindParams = [param.toString()];
+                        return [4 /*yield*/, (0, oracleClient_1.default)(sql, bindParams)];
+                    case 1:
+                        payload = _a.sent();
+                        return [2 /*return*/, payload.rows];
                 }
-                /* check to ensure that params is a string before passing it to casmas.get() function.*/
-                if (typeof params !== "string") {
-                    throw new Error("Invalid parameters");
-                }
-                return [4 /*yield*/, casmas.get(params)];
-            case 1:
-                result = _a.sent();
-                res.send(result);
-                return [3 /*break*/, 3];
-            case 2:
-                err_1 = _a.sent();
-                console.error(err_1);
-                res.status(500).send("Error: " + err_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
-exports.default = customerRouter;
+            });
+        });
+    };
+    return customer;
+}());
+exports.default = customer;

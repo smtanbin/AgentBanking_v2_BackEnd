@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express"
 import jwt from "jsonwebtoken"
 
-import auth from "./authFunction"
+import auth from "./authModel"
 import path from "path"
 import fs from "fs"
 

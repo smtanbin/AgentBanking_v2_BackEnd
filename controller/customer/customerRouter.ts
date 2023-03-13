@@ -1,5 +1,5 @@
 import express from "express"
-import customer from "./customerFunction"
+import customer from "./customerModel"
 
 const customerRouter = express.Router()
 
