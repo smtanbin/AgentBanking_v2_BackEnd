@@ -58,7 +58,7 @@ customerRouter.post("/search", function (req, res) { return __awaiter(void 0, vo
                 if (typeof params !== "string") {
                     throw new Error("Invalid parameters");
                 }
-                return [4 /*yield*/, casmas.get(params)];
+                return [4 /*yield*/, casmas.search(params)];
             case 1:
                 result = _a.sent();
                 res.send(result);
@@ -67,6 +67,35 @@ customerRouter.post("/search", function (req, res) { return __awaiter(void 0, vo
                 err_1 = _a.sent();
                 console.error(err_1);
                 res.status(500).send("Error: " + err_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+customerRouter.post("/get", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var params, result, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                params = req.body.params;
+                /* error handling and validation to the request parameters*/
+                if (!params) {
+                    throw new Error("Params are required.");
+                }
+                /* check to ensure that params is a string before passing it to casmas.get() function.*/
+                if (typeof params !== "string") {
+                    throw new Error("Invalid parameters");
+                }
+                return [4 /*yield*/, casmas.get(params)];
+            case 1:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 3];
+            case 2:
+                err_2 = _a.sent();
+                console.error(err_2);
+                res.status(500).send("Error: " + err_2);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

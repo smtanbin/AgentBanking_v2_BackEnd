@@ -8,7 +8,7 @@ export default class ChartsData {
       )
 
       let sql: any = null
-      console.log(count.rows[0].COUNT)
+
       if (count.rows[0].COUNT > 0) {
         sql = `WITH all_hours (hour) AS (
   SELECT TO_CHAR(TO_DATE('09:00', 'HH24:MI'), 'HH24') + LEVEL - 1

@@ -59,6 +59,22 @@ var customer = /** @class */ (function () {
             });
         });
     };
+    customer.prototype.search = function (param) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, bindParams, payload;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sql = "SELECT c.CUST_ID,c.NAME,c.NID_NO,c.DOB,c.EMAIL,c.FATHER_NAME,c.MOTHER_NAME,c.POUSE_NAME,r.CON_MOB,c.REG_DATE,r.MPHONE,c.PMPHONE,r.REG_STATUS,r.STATUS,c.CUST_ID_TYPE  FROM AGENT_BANKING.CUSTIDINFO  c\n       LEFT JOIN AGENT_BANKING.REGINFO r ON c.CUST_ID = r.CUST_ID\n       WHERE    \n       UPPER (c.NID_NO) LIKE UPPER (%:item%)\n       OR UPPER (c.CON_MOB) LIKE UPPER (%:item%)\n       OR UPPER (r.MPHONE) LIKE UPPER (%:item%)\n       OR UPPER (r.CUST_ID) LIKE UPPER (%:item%)\n       OR UPPER (c.NAME) LIKE UPPER (%:item%)";
+                        bindParams = [param.toString()];
+                        return [4 /*yield*/, (0, oracleClient_1.default)(sql, bindParams)];
+                    case 1:
+                        payload = _a.sent();
+                        return [2 /*return*/, payload.rows];
+                }
+            });
+        });
+    };
     return customer;
 }());
 exports.default = customer;
