@@ -1,6 +1,6 @@
 import execute from "../../model/oracleClient"
 
-export default class auth {
+export default class authModel {
   // username check
   async check(username: string) {
     /*

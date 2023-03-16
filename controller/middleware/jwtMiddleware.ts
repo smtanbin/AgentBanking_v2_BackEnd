@@ -1,7 +1,6 @@
-import jwt from "jsonwebtoken"
-import path from "path"
-import fs from "fs"
 import { Request, Response, NextFunction } from "express"
+import authApplication from "../auth/authApplication"
+const authVerify = new authApplication()
 
 interface User {
   username: string
@@ -15,71 +14,28 @@ declare global {
   }
 }
 
-const JWTVerifyToken = (req: Request, res: Response, next: NextFunction) => {
+const JWTVerifyToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const authHeader = req.headers["authorization"]
-  const token = authHeader && authHeader.split(" ")[1]
-
-  console.log("Access")
+  const token: any = authHeader && authHeader.split(" ")[1]
 
   if (!token) {
-    return res.status(401).json({ message: "Access token not found" })
+    return res.status(401).send({ message: "Access token not found" })
   }
-
-  const configPath = path.join(__dirname, "../../", "config.json") //config file
-  const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
-  const jwtConfig = config.server.security
-
-  const jkey = jwtConfig.jkey || process.env.JKEY
-
-  jwt.verify(token, jkey!, (err: jwt.VerifyErrors | null, user: any) => {
-    if (err) {
-      console.log(err)
-      if (err.name === "TokenExpiredError") {
-        // const refreshToken = req.cookies.refreshToken
-        const refreshToken = req.headers.refrash_key?.toString()
-        if (!refreshToken) {
-          return res.status(401).json({ message: "Refresh token not found" })
-        }
-
-        jwt.verify(
-          refreshToken,
-          jwtConfig.refrash_key || process.env.JWT_REFRESH_SECRET!,
-          (err: jwt.VerifyErrors | null, user: any) => {
-            if (err) {
-              return res.status(403).json({ message: "Invalid refresh token" })
-            }
-
-            const newToken = jwt.sign(
-              { username: user.username },
-              jwtConfig.jkey || process.env.JWT_SECRET!,
-              {
-                expiresIn: jwtConfig.expires || process.env.JWT_EXPIRES_IN!,
-              }
-            )
-            const newRefreshToken = jwt.sign(
-              { username: user.username },
-              jwtConfig.refrash_key || process.env.JWT_REFRESH_SECRET!,
-              {
-                expiresIn:
-                  jwtConfig.refrash_expires ||
-                  process.env.JWT_REFRESH_EXPIRES_IN!,
-              }
-            )
-
-            res.cookie("accessToken", newToken, { httpOnly: true })
-            res.cookie("refreshToken", newRefreshToken, { httpOnly: true })
-            req.user = user
-            next()
-          }
-        )
-      } else {
-        return res.status(403).json({ message: "Invalid access token" })
-      }
-    } else {
-      req.user = user
+  try {
+    const status = await authVerify.TokenCheck(token)
+    if (status) {
+      console.log("Verification Success")
       next()
+    } else {
+      return res.status(401).json({ message: "token_not_valid" })
     }
-  })
+  } catch (e) {
+    return res.status(401).json({ message: "token_not_valid" })
+  }
 }
 
 export default JWTVerifyToken

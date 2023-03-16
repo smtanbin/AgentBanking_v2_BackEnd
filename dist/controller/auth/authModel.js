@@ -40,11 +40,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var oracleClient_1 = __importDefault(require("../../model/oracleClient"));
-var auth = /** @class */ (function () {
-    function auth() {
+var authModel = /** @class */ (function () {
+    function authModel() {
     }
     // username check
-    auth.prototype.check = function (username) {
+    authModel.prototype.check = function (username) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, bindParams, payload, temp;
             return __generator(this, function (_a) {
@@ -62,7 +62,7 @@ var auth = /** @class */ (function () {
         });
     };
     //   retrieves roles
-    auth.prototype.user = function (username) {
+    authModel.prototype.user = function (username) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, bindParams, payload, error_1;
             return __generator(this, function (_a) {
@@ -88,7 +88,7 @@ var auth = /** @class */ (function () {
         });
     };
     // Verify username and password
-    auth.prototype.verify = function (username, password) {
+    authModel.prototype.verify = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, bindParams, payload, temp, error_2;
             return __generator(this, function (_a) {
@@ -112,7 +112,7 @@ var auth = /** @class */ (function () {
         });
     };
     // Refresh
-    auth.prototype.lookRefreshToken = function (username, token_value) {
+    authModel.prototype.lookRefreshToken = function (username, token_value) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, bindParams, payload, error_3;
             return __generator(this, function (_a) {
@@ -135,7 +135,7 @@ var auth = /** @class */ (function () {
         });
     };
     // Refresh Token
-    auth.prototype.storeRefreshToken = function (username, token_value) {
+    authModel.prototype.storeRefreshToken = function (username, token_value) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, bindParams, payload, error_4;
             return __generator(this, function (_a) {
@@ -158,7 +158,7 @@ var auth = /** @class */ (function () {
         });
     };
     // Update Token
-    auth.prototype.updateRefreshToken = function (username, token_value) {
+    authModel.prototype.updateRefreshToken = function (username, token_value) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, bindParams, payload, error_5;
             return __generator(this, function (_a) {
@@ -180,6 +180,6 @@ var auth = /** @class */ (function () {
             });
         });
     };
-    return auth;
+    return authModel;
 }());
-exports.default = auth;
+exports.default = authModel;

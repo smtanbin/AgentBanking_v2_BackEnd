@@ -1,20 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import RootRouter from "./routes/routers";
-import AuthProvider from "./Context/AuthContext";
-
+import { createRoot } from 'react-dom/client';
+import App from "./app";
 
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-  ReactDOM.render(
+  createRoot(rootElement).render(
     <React.StrictMode>
-      <AuthProvider>
-        <RootRouter />
-      </AuthProvider>
-    </React.StrictMode>,
-    rootElement
+      <App />
+    </React.StrictMode>
   );
-} else {
-  console.error("Could not find root element in HTML");
 }

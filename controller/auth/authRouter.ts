@@ -1,13 +1,15 @@
 import express, { Request, Response } from "express"
 import jwt from "jsonwebtoken"
 
-import auth from "./authModel"
+import authModel from "./authModel"
+import authApplication from "./authApplication"
 import path from "path"
 import fs from "fs"
 
 const authRouter = express.Router()
 
-const oauth = new auth()
+const oauth = new authModel()
+const authVerify = new authApplication()
 
 /* This is an endpoint that listens to POST requests on the "/check" route. When a request is received, it first extracts the "username" parameter from the request body. It then performs some error handling and validation to ensure that the "username" parameter is not empty and is a string.
 
@@ -15,7 +17,7 @@ After validating the parameter, it calls the "check" function of the "oauth" obj
 
 If an error occurs during the execution of the endpoint, it will be caught in the "catch" block, logged to the console, and an HTTP 500 response with an error message will be sent back to the client.*/
 
-authRouter.post("/check", async (req, res) => {
+authRouter.post("/userCheck", async (req, res) => {
   try {
     const { username } = req.body
     /* error handling and validation to the request parameters*/
@@ -68,22 +70,18 @@ authRouter.post("/auth", async (req, res) => {
     const userInfo: any = await oauth.user(username)
     const { USERNAME, ROLEID }: any = userInfo[0]
 
-    const configPath = path.join(__dirname, "../../", "config.json") //config file
-    const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
-    const _tokenKey = config.server.security.jkey || process.env.JKEY
-
     // Generate JWT token with expiration time and refresh token
-    const token = jwt.sign(
-      { username: USERNAME, roll: ROLEID, refresh: true },
-      _tokenKey,
-      { expiresIn: "15m" }
-    )
+    let token: string = "undefined"
+    let refreshToken: string = "undefined"
+    try {
+      token = await authVerify.IssueToken(USERNAME, ROLEID)
+      refreshToken = await authVerify.IssueRefrashToken(USERNAME)
+    } catch (e) {
+      return e
+    }
 
-    const refreshToken = jwt.sign(
-      { username: USERNAME, roll: ROLEID, refresh: true },
-      _tokenKey,
-      { expiresIn: "7d" }
-    )
+    if (token == "undefined" && refreshToken == "undefined")
+      return "Reciving Empty Token String"
 
     // Store refresh token in database or cache
     const refresh_ststus = await oauth.storeRefreshToken(refreshToken, username)
@@ -98,6 +96,52 @@ authRouter.post("/auth", async (req, res) => {
     console.error("Error: " + err)
     res.status(500).json("Error: " + err)
     return
+  }
+})
+
+authRouter.post("/tokenValid", async (req, res) => {
+  const authHeader = req.headers["authorization"]
+  const token: any = authHeader && authHeader.split(" ")[1]
+  try {
+    if (!token) {
+      res.status(404).json("Error: Token not found")
+    }
+    try {
+      const tokenStatus: boolean = await authVerify.TokenCheck(token)
+      if (tokenStatus) {
+        res.status(200).json({ massage: tokenStatus })
+      }
+    } catch (err) {
+      res.status(500).json({ massage: err })
+    }
+  } catch (err) {
+    console.error("Error in Token Verification: ", err)
+    res.status(500).json("Error in Token Verification: " + err)
+  }
+})
+authRouter.post("/refrashToken", async (req, res) => {
+  const authHeader = req.headers["authorization"]
+  const token: any = authHeader && authHeader.split(" ")[1]
+
+  const { refreshToken } = req.body
+  try {
+    if (!refreshToken) {
+      res.status(404).json("Error: Token not found")
+    }
+    try {
+      const tokenStatus: string = await authVerify.RefrashTokenCheck(
+        token,
+        refreshToken
+      )
+      if (tokenStatus) {
+        res.status(200).json({ token: tokenStatus })
+      }
+    } catch (err) {
+      res.status(500).json({ massage: err })
+    }
+  } catch (err) {
+    console.error("Error in Token Verification: ", err)
+    res.status(500).json("Error in Token Verification: " + err)
   }
 })
 

@@ -41,7 +41,7 @@ controller.use("*", async (req: Request, res: Response, next: NextFunction) => {
 })
 
 controller.use("/login", authRouter)
-// controller.use("*", JWTVerifyToken)
+controller.use("*", JWTVerifyToken)
 
 // Dashboard
 controller.use("/dashboard/charts", chartsDataRouter)
@@ -52,11 +52,9 @@ controller.use("/customer", customerRouter)
 controller.use("/reports", reportRouter)
 controller.use("/eft", eftReportRouter)
 
-controller.get("/test", async (req: Request, res: Response) => {
-  res.json("Welcome to Restful API Power by Tanbin Hassan Bappi")
-})
-controller.use("/", async (req: Request, res: Response) => {
-  res.json("Welcome to Restful API Power by Tanbin Hassan Bappi")
+controller.get("/", async (req: Request, res: Response) => {
+  const date = new Date(Date.now())
+  res.send("Server Time" + date)
 })
 
 controller.use("/*", async (req: Request, res: Response) => {

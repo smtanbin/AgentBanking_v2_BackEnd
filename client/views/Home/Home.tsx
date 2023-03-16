@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react"
+import { Container } from "rsuite"
+import Dashboard from "./Dashboard"
 
-
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <div>
-      <div className="hero">
-        <div className="hero-body">
-          <h1>Hero title</h1>
-          <p>This is a hero example</p>
-        </div>
+    <Container>
+      <div style={{ padding: "1rem" }}>
+        <Dashboard />
       </div>
-    </div>
+    </Container>
   )
 }
+export default Home

@@ -44,6 +44,7 @@ var body_parser_1 = __importDefault(require("body-parser"));
 var cors_1 = __importDefault(require("cors"));
 // Other controllers
 var authRouter_1 = __importDefault(require("./auth/authRouter"));
+var jwtMiddleware_1 = __importDefault(require("./middleware/jwtMiddleware"));
 var chartRouter_1 = __importDefault(require("./dashboardData/chartRouter"));
 var tableDataRouter_1 = __importDefault(require("./dashboardData/tableDataRouter"));
 var customerRouter_1 = __importDefault(require("./customer/customerRouter"));
@@ -74,7 +75,7 @@ controller.use("*", function (req, res, next) { return __awaiter(void 0, void 0,
     });
 }); });
 controller.use("/login", authRouter_1.default);
-// controller.use("*", JWTVerifyToken)
+controller.use("*", jwtMiddleware_1.default);
 // Dashboard
 controller.use("/dashboard/charts", chartRouter_1.default);
 controller.use("/dashboard/tables", tableDataRouter_1.default);
@@ -82,15 +83,11 @@ controller.use("/dashboard/tables", tableDataRouter_1.default);
 controller.use("/customer", customerRouter_1.default);
 controller.use("/reports", reportRouter_1.default);
 controller.use("/eft", eftReportRouter_1.default);
-controller.get("/test", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+controller.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var date;
     return __generator(this, function (_a) {
-        res.json("Welcome to Restful API Power by Tanbin Hassan Bappi");
-        return [2 /*return*/];
-    });
-}); });
-controller.use("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.json("Welcome to Restful API Power by Tanbin Hassan Bappi");
+        date = new Date(Date.now());
+        res.send("Server Time" + date);
         return [2 /*return*/];
     });
 }); });

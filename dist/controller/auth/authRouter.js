@@ -40,18 +40,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var authModel_1 = __importDefault(require("./authModel"));
-var path_1 = __importDefault(require("path"));
-var fs_1 = __importDefault(require("fs"));
+var authApplication_1 = __importDefault(require("./authApplication"));
 var authRouter = express_1.default.Router();
 var oauth = new authModel_1.default();
+var authVerify = new authApplication_1.default();
 /* This is an endpoint that listens to POST requests on the "/check" route. When a request is received, it first extracts the "username" parameter from the request body. It then performs some error handling and validation to ensure that the "username" parameter is not empty and is a string.
 
 After validating the parameter, it calls the "check" function of the "oauth" object with the "username" parameter and waits for the function to return. The result returned from the function is then sent back as the response to the original request.
 
 If an error occurs during the execution of the endpoint, it will be caught in the "catch" block, logged to the console, and an HTTP 500 response with an error message will be sent back to the client.*/
-authRouter.post("/check", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+authRouter.post("/userCheck", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var username, result, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -81,11 +80,11 @@ authRouter.post("/check", function (req, res) { return __awaiter(void 0, void 0,
     });
 }); });
 authRouter.post("/auth", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, userCheck, verified, userInfo, _b, USERNAME, ROLEID, configPath, config, _tokenKey, token, refreshToken, refresh_ststus, err_2;
+    var _a, username, password, userCheck, verified, userInfo, _b, USERNAME, ROLEID, token, refreshToken, e_1, refresh_ststus, err_2;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                _c.trys.push([0, 5, , 6]);
+                _c.trys.push([0, 10, , 11]);
                 _a = req.body, username = _a.username, password = _a.password;
                 /* error handling and validation to the request parameters*/
                 if (!username) {
@@ -119,14 +118,28 @@ authRouter.post("/auth", function (req, res) { return __awaiter(void 0, void 0, 
             case 3:
                 userInfo = _c.sent();
                 _b = userInfo[0], USERNAME = _b.USERNAME, ROLEID = _b.ROLEID;
-                configPath = path_1.default.join(__dirname, "../../", "config.json") //config file
-                ;
-                config = JSON.parse(fs_1.default.readFileSync(configPath, "utf8"));
-                _tokenKey = config.server.security.jkey || process.env.JKEY;
-                token = jsonwebtoken_1.default.sign({ username: USERNAME, roll: ROLEID, refresh: true }, _tokenKey, { expiresIn: "15m" });
-                refreshToken = jsonwebtoken_1.default.sign({ username: USERNAME, roll: ROLEID, refresh: true }, _tokenKey, { expiresIn: "7d" });
-                return [4 /*yield*/, oauth.storeRefreshToken(refreshToken, username)];
+                token = "undefined";
+                refreshToken = "undefined";
+                _c.label = 4;
             case 4:
+                _c.trys.push([4, 7, , 8]);
+                return [4 /*yield*/, authVerify.IssueToken(USERNAME, ROLEID)];
+            case 5:
+                token = _c.sent();
+                return [4 /*yield*/, authVerify.IssueRefrashToken(USERNAME)];
+            case 6:
+                refreshToken = _c.sent();
+                return [3 /*break*/, 8];
+            case 7:
+                e_1 = _c.sent();
+                return [2 /*return*/, e_1];
+            case 8:
+                if (token == "undefined" && refreshToken == "undefined")
+                    return [2 /*return*/, "Reciving Empty Token String"
+                        // Store refresh token in database or cache
+                    ];
+                return [4 /*yield*/, oauth.storeRefreshToken(refreshToken, username)];
+            case 9:
                 refresh_ststus = _c.sent();
                 if (!refresh_ststus) {
                     res.status(500).json("Error: unable to store refresh token");
@@ -135,13 +148,88 @@ authRouter.post("/auth", function (req, res) { return __awaiter(void 0, void 0, 
                 // Send token and refresh token as response, along with a cookie
                 res.cookie("auth_token", token, { httpOnly: true, secure: true });
                 res.json({ token: token, refreshToken: refreshToken });
-                return [3 /*break*/, 6];
-            case 5:
+                return [3 /*break*/, 11];
+            case 10:
                 err_2 = _c.sent();
                 console.error("Error: " + err_2);
                 res.status(500).json("Error: " + err_2);
                 return [2 /*return*/];
-            case 6: return [2 /*return*/];
+            case 11: return [2 /*return*/];
+        }
+    });
+}); });
+authRouter.post("/tokenValid", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var authHeader, token, tokenStatus, err_3, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                authHeader = req.headers["authorization"];
+                token = authHeader && authHeader.split(" ")[1];
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 6, , 7]);
+                if (!token) {
+                    res.status(404).json("Error: Token not found");
+                }
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, authVerify.TokenCheck(token)];
+            case 3:
+                tokenStatus = _a.sent();
+                if (tokenStatus) {
+                    res.status(200).json({ massage: tokenStatus });
+                }
+                return [3 /*break*/, 5];
+            case 4:
+                err_3 = _a.sent();
+                res.status(500).json({ massage: err_3 });
+                return [3 /*break*/, 5];
+            case 5: return [3 /*break*/, 7];
+            case 6:
+                err_4 = _a.sent();
+                console.error("Error in Token Verification: ", err_4);
+                res.status(500).json("Error in Token Verification: " + err_4);
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
+        }
+    });
+}); });
+authRouter.post("/refrashToken", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var authHeader, token, refreshToken, tokenStatus, err_5, err_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                authHeader = req.headers["authorization"];
+                token = authHeader && authHeader.split(" ")[1];
+                refreshToken = req.body.refreshToken;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 6, , 7]);
+                if (!refreshToken) {
+                    res.status(404).json("Error: Token not found");
+                }
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, authVerify.RefrashTokenCheck(token, refreshToken)];
+            case 3:
+                tokenStatus = _a.sent();
+                if (tokenStatus) {
+                    res.status(200).json({ token: tokenStatus });
+                }
+                return [3 /*break*/, 5];
+            case 4:
+                err_5 = _a.sent();
+                res.status(500).json({ massage: err_5 });
+                return [3 /*break*/, 5];
+            case 5: return [3 /*break*/, 7];
+            case 6:
+                err_6 = _a.sent();
+                console.error("Error in Token Verification: ", err_6);
+                res.status(500).json("Error in Token Verification: " + err_6);
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); });

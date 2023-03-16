@@ -9,7 +9,7 @@
     "security": {
       "jkey": "fxny6q36y6uim85sm75u",
       "expires": "2000",
-      "refrash_key": "fxny6q36y6uim85sm75u",
+      "rkey": "fxny6q36y6uim85sm75u",
       "refrash_expires": "30000"
     }
   }
