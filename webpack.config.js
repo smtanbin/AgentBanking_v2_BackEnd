@@ -50,6 +50,10 @@ module.exports = {
           from: path.resolve(__dirname, "client", "index.html"),
           to: path.resolve(__dirname, "dist", "public"),
         },
+        {
+          from: path.resolve(__dirname, "package.json"),
+          to: path.resolve(__dirname, "dist", "package.json"),
+        },
       ],
     }),
   ],
