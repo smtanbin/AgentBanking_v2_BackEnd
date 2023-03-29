@@ -29,7 +29,9 @@ module.exports = {
       },
     ],
   },
+  // mode: "production",
   mode: "development",
+
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
@@ -43,6 +45,10 @@ module.exports = {
         {
           from: path.resolve(__dirname, "config.json"),
           to: path.resolve(__dirname, "dist"),
+        },
+        {
+          from: path.resolve(__dirname, "client", "index.html"),
+          to: path.resolve(__dirname, "dist", "public"),
         },
       ],
     }),

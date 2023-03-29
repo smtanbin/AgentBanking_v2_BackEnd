@@ -1,0 +1,8 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="RequiredAttributes" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myAdditionalRequiredHtmlAttributes" value="align,colSpan,fixed,fullText,minWidth,onResize,resizable,rowSpan,sortable,treeCol,verticalAlign,width,align,colSpan,fixed,fullText,minWidth,onResize,resizable,rowSpan,sortable,treeCol,verticalAlign,width,align,colSpan,fixed,fullText,minWidth,onResize,resizable,rowSpan,sortable,treeCol,verticalAlign,width,align,colSpan,fixed,fullText,minWidth,onResize,resizable,rowSpan" />
+    </inspection_tool>
+  </profile>
+</component>

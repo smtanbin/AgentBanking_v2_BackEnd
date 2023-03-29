@@ -1,25 +1,18 @@
 import execute from "../../model/oracleClient"
 
-export default class customer {
-  async get(param: string) {
-    const sql: string =
-      "SELECT *  FROM AGENT_BANKING.CUSTIDINFO  c  LEFT JOIN AGENT_BANKING.REGINFO r ON c.CUST_ID = r.CUST_ID  WHERE    c.NID_NO = :item OR c.CON_MOB = :item OR r.MPHONE = :item OR r.CUST_ID = :item"
-    const bindParams = [param.toString()]
-
-    const payload = await execute(sql, bindParams)
-    return payload.rows
-  }
-  async search(param: string) {
-    const sql: string = `SELECT c.CUST_ID,c.NAME,c.NID_NO,c.DOB,c.EMAIL,c.FATHER_NAME,c.MOTHER_NAME,c.POUSE_NAME,r.CON_MOB,c.REG_DATE,r.MPHONE,c.PMPHONE,r.REG_STATUS,r.STATUS,c.CUST_ID_TYPE  FROM AGENT_BANKING.CUSTIDINFO  c
-       LEFT JOIN AGENT_BANKING.REGINFO r ON c.CUST_ID = r.CUST_ID
-       WHERE    
-       UPPER (c.NID_NO) LIKE UPPER (%:item%)
-       OR UPPER (c.CON_MOB) LIKE UPPER (%:item%)
-       OR UPPER (r.MPHONE) LIKE UPPER (%:item%)
-       OR UPPER (r.CUST_ID) LIKE UPPER (%:item%)
-       OR UPPER (c.NAME) LIKE UPPER (%:item%)`
-    const bindParams = [param.toString()]
-    const payload = await execute(sql, bindParams)
+export default class Notification {
+   async maturity() {
+    const sql: string = `SELECT MPHONE,'DEMAND' ID,'MATURE' MODEL FROM AGENT_BANKING.REGINFO R
+    WHERE AC_TYPE_CODE = 4 AND REG_STATUS = 'P' AND STATUS <> 'C' AND NVL (RENWAL_PRINCIPLE, 'N') <> 'Y' AND NVL (RENWL_WIT, 'N') <> 'Y' AND R.MATURITY_DATE <= TRUNC (SYSDATE)
+   UNION ALL
+   SELECT MPHONE, 'DEMAND' ID,'MATURE' MODEL FROM  AGENT_BANKING.REGINFO R
+    WHERE AC_TYPE_CODE = 4 AND REG_STATUS = 'P' AND STATUS <> 'C'  AND NVL (RENWAL_PRINCIPLE, 'N') = 'N'
+          AND NVL (RENWL_WIT, 'N') = 'Y' AND NVL (MATURITY_AMT, 0) > 5000000 AND R.MATURITY_DATE <= TRUNC (SYSDATE)
+   UNION ALL
+   SELECT MPHONE,'RECURRING' ID,'MATURE' MODEL  FROM  AGENT_BANKING.REGINFO R 
+   WHERE AC_TYPE_CODE IN (SELECT ACC_TYPE_CODE FROM  AGENT_BANKING.PRODUCT_SETUP WHERE MODULE_TYPE_CODE = 20)
+          AND REG_STATUS = 'P' AND STATUS NOT IN ('F', 'C') AND R.MATURITY_DATE <= SYSDATE`
+    const payload = await execute(sql)
     return payload.rows
   }
 }

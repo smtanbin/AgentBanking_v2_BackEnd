@@ -1,10 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { toast } from "react-toastify";
-import axios from "axios";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useAuth } from "../../../../Context/AuthProvider";
 import { generateRandomColors } from "../../../../lib/generateRandomColors";
+import Api from "../../../../app/useApi";
 
 interface ChartData {
   labels: string[];
@@ -38,8 +37,8 @@ const options: any = {
 
 const BalanceChart: React.FC = () => {
   ChartJS.register(ArcElement, Tooltip, Legend);
-
-  const { token }: any = useAuth();
+  const auth: any = useAuth();
+  const api = new Api(auth);
 
   const [error, setError] = useState<boolean>(false);
   const [chartData, setChartData] = useState({
@@ -54,47 +53,36 @@ const BalanceChart: React.FC = () => {
     ],
   });
 
+
   const getBalanceChartData = useCallback(async () => {
+
     try {
-      const response = await axios.get(
-        `${process.env.VITE_API_URL}/api/dashboard/charts/balanceChart`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token.token}`,
-            refrash_key: token.refreshToken,
+      const response = await api.useApi('GET', '/dashboard/charts/balanceChart')
+
+      const balanceArray: number[] = [];
+      const typeArray: string[] = [];
+
+      response.forEach(({ BALANCE, TYPE }: { BALANCE: number; TYPE: string }) => {
+        balanceArray.push(BALANCE);
+        typeArray.push(TYPE);
+      });
+      setError(false);
+      setChartData({
+        labels: typeArray,
+        datasets: [
+          {
+            label: "Balance",
+            data: balanceArray,
+            backgroundColor: generateRandomColors(balanceArray.length),
+            fill: true,
           },
-        }
-      );
-
-      if (response.status === 200) {
-        const balanceArray: number[] = [];
-        const typeArray: string[] = [];
-
-        response.data.forEach(({ BALANCE, TYPE }: { BALANCE: number; TYPE: string }) => {
-          balanceArray.push(BALANCE);
-          typeArray.push(TYPE);
-        });
-        setError(false);
-        setChartData({
-          labels: typeArray,
-          datasets: [
-            {
-              label: "Balance",
-              data: balanceArray,
-              backgroundColor: generateRandomColors(balanceArray.length),
-              fill: true,
-            },
-          ],
-        });
-      } else {
-        toast.error("Error retrieving balance chart");
-        setError(true);
-      }
+        ],
+      });
     } catch (err) {
-      toast.error("Error retrieving balance chart" + err);
+      setError(true);
+      // toast.error("Error retrieving balance chart" + err);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

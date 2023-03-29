@@ -9,10 +9,8 @@ import {
   FlexboxGrid,
 } from "rsuite";
 import { useAuth } from "../../Context/AuthProvider";
-// import { useApi } from "../../Context/NetworkProvider";
-
-// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useApi from "../../app/useApi";
 // Elements
 // import logo from "../../assets/img/logo.svg"
 
@@ -21,19 +19,19 @@ export default function LoginUI() {
   const [password, setPassword] = useState<string>("");
   const [errorClass, setErrorClass] = useState<string>("");
 
-  const { login } = useAuth();
-  const api = useApi();
+  const auth = useAuth();
+  const api = new useApi(auth);
 
 
   const handleSubmit = (checkStatus: boolean, event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const networkRequest = async () => {
+
       try {
-        const response = await api({ type: 'POST', path: '/login/auth', data: { username, password } });
-        console.log(response);
-        const { token, refreshToken } = response;
-        login({ token: token, refreshToken: refreshToken });
+        const res = await api.useLogin({ username, password });
+        const { token, refreshToken } = res.response;
+        auth.login({ token: token, refreshToken: refreshToken });
 
       } catch (err: any) {
         if (err.response && err.response.status === 500) {
@@ -65,7 +63,7 @@ export default function LoginUI() {
       <Container>
         <Content>
           <FlexboxGrid justify="center">
-            <FlexboxGrid.Item colspan={6}>
+            <FlexboxGrid.Item>
               <Panel
                 header={
                   <h3>
@@ -84,10 +82,11 @@ export default function LoginUI() {
                 <Form onSubmit={handleSubmit}>
                   <Form.Group>
                     <Form.ControlLabel>
-                      Username or email address
+                      Username
                     </Form.ControlLabel>
                     <Form.Control
                       name="name"
+                      autoComplete="on"
                       value={username}
                       onChange={handleUsernameChange}
                     />
@@ -97,7 +96,7 @@ export default function LoginUI() {
                     <Form.Control
                       name="password"
                       type="password"
-                      autoComplete="off"
+                      autoComplete="on"
                       value={password}
                       onChange={handlePasswordChange}
                     />
@@ -107,7 +106,7 @@ export default function LoginUI() {
                       <Button appearance="primary" type="submit">
                         Sign in
                       </Button>
-                      <Button appearance="link">Forgot password?</Button>
+                      {/* <Button appearance="link">Forgot password?</Button> */}
                     </ButtonToolbar>
                   </Form.Group>
                 </Form>

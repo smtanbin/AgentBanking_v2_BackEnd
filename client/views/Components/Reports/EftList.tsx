@@ -14,23 +14,28 @@ import {
   IconButton,
   FlexboxGrid,
 } from "rsuite"
-
 import { useAuth } from "../../../Context/AuthProvider"
+import Api from "../../../app/useApi"
+
 
 const { Column, HeaderCell, Cell } = Table
 import SortDownIcon from "@rsuite/icons/SortDown"
 
 const EftList: React.FC = () => {
-  const { token } = useAuth()
+  const auth = useAuth()
+  const api = new Api(auth)
+
   const [summeryList, setSummeryList] = useState()
   const [detailList, setDetailList] = useState()
   const [returnList, setReturnList] = useState()
   const [loadingState, setLoadingState] = useState(false)
 
   const handelReport = () => {
+
+
     const fatchdata = async () => {
       setLoadingState(true)
-      const _status = await getReport(token)
+      const _status = await getReport(api)
       setLoadingState(_status)
     }
     fatchdata()
@@ -38,13 +43,13 @@ const EftList: React.FC = () => {
 
   useEffect(() => {
     const fatchdata = async () => {
-      const _setSummeryList = await getEftSummeryList(token);
+      const _setSummeryList = await getEftSummeryList(api);
       setSummeryList(_setSummeryList);
 
-      const _setDetailList = await getEftList(token);
+      const _setDetailList = await getEftList(api);
       setDetailList(_setDetailList);
 
-      const _setReturnList = await getEftReturnList(token);
+      const _setReturnList = await getEftReturnList(api);
       setReturnList(_setReturnList);
     };
     fatchdata();

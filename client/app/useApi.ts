@@ -19,21 +19,18 @@ class Api {
   // Define the useApi method
   useApi = (type = "GET", path: string, data: any = null) => {
     return new Promise<any>(async (resolve, reject) => {
-      const { token, login } = this.auth
+      const { token } = this.auth
       console.log("api input: ", type, path, data)
-
       if (!token) {
         throw new Error("No token found")
       }
       if (!path) {
         throw new Error("No path found")
       }
-
       const headers = {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token.token,
       }
-
       try {
         const response: any = await axios({
           method: type,
@@ -41,8 +38,11 @@ class Api {
           data,
           headers,
         })
-        if (response.status === 401) {
-          const _token = await this.useRefreshToken(login, token)
+        resolve(response.data)
+      } catch (error: any) {
+        if (error.response.status === 401) {
+          console.log("401 found")
+          const _token = await this.useRefreshToken()
           if (_token) {
             const headers = {
               "Content-Type": "application/json",
@@ -50,21 +50,77 @@ class Api {
             }
             const response: any = await axios({
               method: type,
-              url: _url + "/api/" + path,
+              url: _url + "/api" + path,
               data,
               headers,
             })
+
             console.log("api reply: ", response.data)
             resolve(response.data)
           } else {
             reject("Token Error R")
           }
         } else {
-          resolve(response.data)
+          console.error("Error in useApi ,Path:" + path + " Error: ", error)
+          reject(error)
         }
-      } catch (error) {
-        console.error("Error generated in NetworkRequest", error)
-        reject(error)
+      }
+    })
+  }
+
+  // Define the useApi method
+  useBlopApi = (
+    type = "GET",
+    path: string,
+    content: string = "pdf",
+    data: any = null
+  ) => {
+    return new Promise<any>(async (resolve, reject) => {
+      const { token } = this.auth
+      if (!token) {
+        throw new Error("No token found")
+      }
+      if (!path) {
+        throw new Error("No path found")
+      }
+      const headers = {
+        "Content-Type": `application/${content}`,
+        Authorization: "Bearer " + token.token,
+      }
+      try {
+        const response: any = await axios({
+          method: type,
+          responseType: "blob",
+          url: _url + "/api" + path,
+          data,
+          headers,
+        })
+        resolve(response.data)
+      } catch (errorL: any) {
+        if (errorL.response.status === 401) {
+          const _token = await this.useRefreshToken()
+          if (_token) {
+            const headers = {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token.token,
+            }
+            const response: any = await axios({
+              method: type,
+              responseType: "blob",
+              url: _url + "/api" + path,
+              data,
+              headers,
+            })
+
+            console.log("api reply: ", response.data)
+            resolve(response.data)
+          } else {
+            reject("Token Error R")
+          }
+        } else {
+          console.error("Error in useApi ,Path:" + path + " Error: ", errorL)
+          reject(errorL)
+        }
       }
     })
   }
@@ -84,7 +140,7 @@ class Api {
         })
 
         resolve({ status: response.status, response: response.data })
-      } catch (error) {
+      } catch (error: any) {
         reject({
           status: error.response.status,
           response: error.response.data,
@@ -94,11 +150,10 @@ class Api {
   }
 
   // Define the useRefreshToken method
-  useRefreshToken = (
-    login: (arg0: { token: any; refreshToken: any }) => void,
-    token: { token: string; refreshToken: any }
-  ) => {
+  useRefreshToken = () => {
     return new Promise<boolean>(async (resolve, reject) => {
+      const { login, token } = this.auth
+
       if (token.token && token.refreshToken) {
         const headers = {
           "Content-Type": "application/json",
@@ -114,19 +169,21 @@ class Api {
             data: data,
             headers,
           })
-          if (response.status === 200) {
-            const { token } = response.data
-            login({ token: token, refreshToken: token.refreshToken })
-            resolve(true)
-          } else {
-            console.log("Error" + response)
-            reject(false)
-          }
-        } catch (error) {
+          const { token } = response.data
+          login({ token: token, refreshToken: this.auth.token.refreshToken })
+          resolve(true)
+        } catch (error: any) {
+          console.log("Error in useRefreshToken " + error.response)
           reject(error)
         }
       } else {
-        reject("No token found")
+        reject(
+          "Error orgin useRefreshToken: No token found" +
+            token.token +
+            " ,Refrash " +
+            token.refreshToken
+        )
+        this.auth.logout()
       }
     })
   }

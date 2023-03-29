@@ -1,57 +1,48 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Panel, Placeholder } from "rsuite";
-import axios from "axios";
-import { useAuth } from "../../../../Context/AuthProvider";
-import { Table } from "rsuite";
+import { Panel, Placeholder, Table } from "rsuite";
 import { Column, HeaderCell, Cell } from "rsuite-table";
+import { useAuth } from "../../../../Context/AuthProvider";
+import Api from "../../../../app/useApi";
 import { toast } from "react-toastify";
 
 const GlobalEvent: React.FC = () => {
-  const { token }: any = useAuth();
+  const auth = useAuth();
+  const api = new Api(auth);
+
   const [error, setError] = useState<boolean>(true);
   const [tableData, setTableData] = useState<any[]>();
 
   const getBalanceChartData = useCallback(async () => {
     try {
-      const response = await axios.get<any>(
-        process.env.VITE_API_URL + "/api/dashboard/tables/event",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token.token,
-            refrash_key: token.refreshToken,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        setError(false);
-        setTableData(response.data);
-      } else {
-        toast.error("Error retrieving balance chart: " + response.statusText);
-        setError(true);
-      }
+      const response = await api.useApi('GET', "/dashboard/tables/event")
+      setError(false);
+      setTableData(response);
     } catch (err) {
-      toast.error("Error retrieving balance chart" + err);
+      // toast.error("Error retrieving balance chart: " + err.response.statusText);
+      setError(true)
+      console.error("Error retrieving balance chart" + err);
+      return <div>Error</div>
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
       getBalanceChartData();
     }, 13 * 60 * 1000); // 13 minutes
-
+    getBalanceChartData()
     return () => clearInterval(interval);
-  }, [getBalanceChartData]);
+  }, []);
 
-  useEffect(() => {
-    getBalanceChartData();
-  }, [getBalanceChartData]);
+  // useEffect(() => {
+  //   getBalanceChartData();
+  // }, []);
+
+
 
   return (
     <>
       {error ? (
-        <Placeholder.Paragraph />
+        <div>Error</div>
       ) : (
         <Table cellBordered autoHeight data={tableData}>
           <Column flexGrow={1}>

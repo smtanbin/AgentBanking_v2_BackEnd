@@ -2,7 +2,7 @@ import React from "react";
 import { Panel, PanelGroup, Placeholder, Row, Col, Container } from "rsuite";
 // Charts
 import BalanceChart from "./dashboard/Charts/BalanceChart";
-import LineChart from "./dashboard/Charts/TransactionChart";
+// import LineChart from "./dashboard/Charts/TransactionChart";
 // Tabels
 import GlobalEvent from "./dashboard/Tables/GlobalEvent";
 import PendingEvent from "./dashboard/Tables/PendingEvent";
@@ -29,7 +29,7 @@ const Cards: React.FC = () => {
         </Col>
         <Col sm={12}>
           <Panel header="Transaction Chart" bodyFill>
-            <LineChart />
+            {/* <LineChart /> */}
           </Panel>
         </Col>
       </div>
@@ -40,8 +40,8 @@ const Cards: React.FC = () => {
 const DataChart: React.FC = () => {
   return (
     <Row className="show-grid">
-      <div style={{ paddingTop: "2rem" }}>
-        <Col xs={16}>
+      <Col xs={16}>
+        <div style={{ paddingTop: "2rem" }}>
           <PanelGroup accordion>
             <Panel header="Pending Events" bodyFill defaultExpanded>
               <PendingEvent />
@@ -50,18 +50,19 @@ const DataChart: React.FC = () => {
               <GlobalEvent />
             </Panel>
           </PanelGroup>
-        </Col>
-        <Col xs={8}>
-          <Panel header="Balance Chart" bodyFill>
-            <div style={{ padding: "2rem" }}>
-              <BalanceChart />
-            </div>
-          </Panel>
-        </Col>
-      </div>
+        </div>
+      </Col>
+      <Col xs={8}>
+        <Panel header="Balance Chart" bodyFill>
+          <div style={{ padding: "2rem" }}>
+            <BalanceChart />
+          </div>
+        </Panel>
+      </Col>
     </Row>
   );
 };
+
 
 const Dashboard: React.FC = () => {
   return (

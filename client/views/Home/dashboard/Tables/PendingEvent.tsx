@@ -5,6 +5,7 @@ import { useAuth } from "../../../../Context/AuthProvider";
 import { Table } from "rsuite";
 import { Column, HeaderCell, Cell } from "rsuite-table";
 import { toast } from "react-toastify";
+import Api from "../../../../app/useApi";
 
 interface TableData {
   EVENT: string;
@@ -14,34 +15,25 @@ interface TableData {
 }
 
 const PendingEvent: React.FC = () => {
-  const { token }: any = useAuth();
-  const [error, a] = useState(true);
+
+  const auth = useAuth();
+  const api = new Api(auth);
+  const [error, setError] = useState(true);
   const [tableData, setTableData] = useState<TableData[] | undefined>(undefined);
 
   const getBalanceChartData = useCallback(async () => {
     try {
-      const response = await axios.get(
-        process.env.VITE_API_URL + "/api/dashboard/tables/pendingEvent",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token.token,
-            refrash_key: token.refreshToken,
-          },
-        }
-      );
 
-      if (response.status === 200) {
-        setError(false);
-        setTableData(response.data);
-      } else {
-        toast.error("Error retrieving balance chart");
-        setError(true);
-      }
+      const response = await api.useApi('GET', "/dashboard/tables/pendingEvent")
+
+      setError(false);
+      setTableData(response);
     } catch (err) {
-      toast.error("Error retrieving balance chart" + err);
+      // toast.error("Error retrieving balance chart");
+      setError(true);
+      console.error("Error retrieving balance chart" + err);
     }
-  }, [token]);
+  }, [auth.token]);
 
   useEffect(() => {
     const interval = setInterval(() => {
