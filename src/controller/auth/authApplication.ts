@@ -3,10 +3,9 @@ import path from "path"
 import fs from "fs"
 
 export default class authApplication {
-  // constructor(this: undefined.configPath= path.join(__dirname, "../../../", "config.json"))
   IssueToken(USERNAME: string, ROLEID: string) {
     return new Promise<string>((resolve, reject) => {
-      const configPath = path.join(__dirname, "../../../", "config.json") //config file
+      const configPath = path.join(__dirname, "config.json") //config file
       const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
       const jwtConfig = config.server.security
       const jkey = jwtConfig.jkey || process.env.JKEY
@@ -26,7 +25,7 @@ export default class authApplication {
   }
   IssueRefrashToken(USERNAME: string) {
     return new Promise<string>((resolve, reject) => {
-      const configPath = path.join(__dirname, "../../../", "config.json") //config file
+      const configPath = path.join(__dirname, "config.json") //config file
       const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
       const jwtConfig = config.server.security
       try {
@@ -46,7 +45,7 @@ export default class authApplication {
 
   TokenCheck(token: string) {
     return new Promise<boolean>((resolve, reject) => {
-      const configPath = path.join(__dirname, "../../../", "config.json") //config file
+      const configPath = path.join(__dirname, "config.json") //config file
       const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
       const jwtConfig = config.server.security
       const jkey = jwtConfig.jkey || process.env.JKEY
@@ -67,7 +66,7 @@ export default class authApplication {
 
   RefrashTokenCheck(token: string, refreshToken: string) {
     return new Promise<any>((resolve, reject) => {
-      const configPath = path.join(__dirname, "../../../", "config.json") //config file
+      const configPath = path.join(__dirname, "config.json") //config file
       const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
       const jwtConfig = config.server.security
       const jkey = jwtConfig.rkey || process.env.RKEY

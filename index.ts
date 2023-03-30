@@ -37,7 +37,7 @@ app.use(
   }
 )
 
-const configPath = path.join(__dirname, "../config.json")
+const configPath = path.join(__dirname, "./config.json")
 const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
 
 let port: any = null

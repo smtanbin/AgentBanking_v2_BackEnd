@@ -1,29 +1,43 @@
 const path = require("path")
-const nodeExternals = require("webpack-node-externals")
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 module.exports = {
-  entry: "./dist/index.js",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "server.bundle.js",
-  },
-  target: "node",
-  externals: [nodeExternals()],
-  mode: "development",
+  entry: "./client/index.tsx",
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
+      },
+      {
+        test: /\.svg$/,
+        use: ["@svgr/webpack", "svg-inline-loader"],
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "url-loader",
+            options: { limit: 8192, name: "[name].[hash:8].[ext]" },
           },
-        },
+        ],
       },
     ],
+  },
+  // mode: "production",
+  mode: "development",
+
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist", "public"),
   },
   plugins: [
     new CopyWebpackPlugin({

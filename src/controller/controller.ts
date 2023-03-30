@@ -43,10 +43,10 @@ controller.use("*", async (req: Request, res: Response, next: NextFunction) => {
 
 controller.use("/login", authRouter)
 
-controller.use("*", async (req: Request, res: Response, next: NextFunction) => {
-  console.log("Route Requested: ", req.baseUrl)
-  next()
-})
+// controller.use("*", async (req: Request, res: Response, next: NextFunction) => {
+//   console.log("Route Requested: ", req.baseUrl)
+//   next()
+// })
 controller.use("*", JWTVerifyToken)
 // Dashboard
 controller.use("/dashboard/charts", chartsDataRouter)

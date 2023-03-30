@@ -3,6 +3,7 @@ import EftReportModel from "./eftModel"
 import { Response } from "express-serve-static-core"
 import { eftReportApp } from "./eftApp"
 import { compareNames } from "./eftApp"
+import { randomUUID } from "crypto"
 
 import pdf from "html-pdf"
 
@@ -77,18 +78,20 @@ eftReportRouter.get("/return", async (req, res) => {
 })
 
 eftReportRouter.get("/report*", async (req, res) => {
-  try {
-    const html = await eftReportApp()
-    const options: object = {
-      format: "A4",
-      margin: {
-        top: "2cm",
-        right: "2cm",
-        bottom: "2cm",
-        left: "2cm",
-      },
-    }
+  const html = await eftReportApp()
+  const filename = `${randomUUID()}.pdf`
+  console.log(filename)
+  const options: object = {
+    format: "A4",
+    margin: {
+      top: "2cm",
+      right: "2cm",
+      bottom: "2cm",
+      left: "2cm",
+    },
+  }
 
+  try {
     pdf.create(html, options).toStream(
       (
         err: any,
@@ -96,8 +99,11 @@ eftReportRouter.get("/report*", async (req, res) => {
           pipe: (arg0: Response<any, Record<string, any>, number>) => void
         }
       ) => {
-        if (err) return res.send(err)
         res.type("pdf")
+        res.setHeader(
+          "Content-Disposition",
+          `attachment; filename="${filename}"`
+        )
         stream.pipe(res)
       }
     )

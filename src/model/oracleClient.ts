@@ -4,10 +4,10 @@ import fs from "fs"
 
 export async function createClient() {
   try {
-    const configPath = path.join(__dirname, "../../config.json")
+    const configPath = path.join(__dirname, "./config.json")
     const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
     if (!config && !config.database) {
-      console.log("config.json file not found.")
+      throw new Error("config.json file not found.")
       return undefined
     } else {
       return await oracledb.getConnection(config.database)
