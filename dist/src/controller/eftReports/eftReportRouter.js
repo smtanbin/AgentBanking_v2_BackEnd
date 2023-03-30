@@ -132,6 +132,18 @@ eftReportRouter.get("/return", function (req, res) { return __awaiter(void 0, vo
         }
     });
 }); });
+eftReportRouter.get("/test", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var html;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, (0, eftApp_1.eftReportApp)()];
+            case 1:
+                html = _a.sent();
+                res.send(html);
+                return [2 /*return*/];
+        }
+    });
+}); });
 eftReportRouter.get("/report*", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var html, filename, options;
     return __generator(this, function (_a) {
@@ -140,7 +152,6 @@ eftReportRouter.get("/report*", function (req, res) { return __awaiter(void 0, v
             case 1:
                 html = _a.sent();
                 filename = "".concat((0, crypto_1.randomUUID)(), ".pdf");
-                console.log(filename);
                 options = {
                     format: "A4",
                     margin: {

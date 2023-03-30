@@ -97,6 +97,7 @@ export const eftReportApp = () => {
     <html>
     <head>
     <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eft List</title>
 
 <style>
@@ -105,6 +106,7 @@ margin: 0;
 padding: 0;
 font-family:  sans-serif;
 }
+
 body{
     width: 8.27in;
   background-color: #fff !important;
@@ -133,18 +135,16 @@ body{
 table {
  margin: 20px;
    border-collapse: collapse;
-   font-size: 12px;
+   font-size: 9px;
    min-width: 50%;
    background-color: #fff !important;
   box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
   border: solid 1px #fff;
-  border-radius: 1rem;
   position: relative;
 }
 
 table td, table th {
-  // border: .1rem solid #ddd;
-  padding:2px 4px;
+  padding:1px 2px;
 
 }
 
@@ -155,15 +155,14 @@ color: #000000;
 
 table tr:nth-child(even){background-color: #EEEEEE;}
 table thead {
-  border-radius: 25px;
   background-color: #747474;
 
 }
 
 table th {
 text-align: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
    border: .1rem solid #ddd;
   color: #fff;
 }
@@ -227,6 +226,12 @@ text-align: center;
 
 .col-12 {
   width: 100%;
+}
+
+@media only screen and (min-width: 11in) {
+  body {
+    width: 11in;
+  }
 }
 
 </style>
@@ -295,15 +300,18 @@ text-align: center;
              </thead>
              <tbody>
              ${listRows}
+             <tr>
+               <td colspan="7"><b>Total</b></td>
+    
+                    <td><b>${
+                      totalAMOUNT ? totalAMOUNT.toFixed(2) : totalAMOUNT
+                    }</b></td>
+               <td></td>
+             </tr>
              </tbody>
-            <tr>
-              <td colspan="7"><b>Total</b></td>
-   
-                   <td><b>${
-                     totalAMOUNT ? totalAMOUNT.toFixed(2) : totalAMOUNT
-                   }</b></td>
-              <td></td>
-            </tr>
+            <tfoot rowspan='2' colspan="7" >
+      
+            </tfoot>
           </table>
     </div>
     </div>

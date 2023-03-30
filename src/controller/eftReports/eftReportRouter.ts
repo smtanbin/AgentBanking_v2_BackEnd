@@ -77,10 +77,14 @@ eftReportRouter.get("/return", async (req, res) => {
   }
 })
 
+eftReportRouter.get("/test", async (req, res) => {
+  const html = await eftReportApp()
+  res.send(html)
+})
+
 eftReportRouter.get("/report*", async (req, res) => {
   const html = await eftReportApp()
   const filename = `${randomUUID()}.pdf`
-  console.log(filename)
   const options: object = {
     format: "A4",
     margin: {
