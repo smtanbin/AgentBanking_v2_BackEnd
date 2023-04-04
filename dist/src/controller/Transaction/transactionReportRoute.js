@@ -40,9 +40,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var transactionModel_1 = __importDefault(require("./transactionModel"));
+var statmentModule_1 = require("./Statment/statmentModule");
+var transactionModel_1 = __importDefault(require("../../model/Models/TransactionModels/transactionModel"));
 var transactionReportRoute = express_1.default.Router();
 var transaction = new transactionModel_1.default();
+var stmModel = new statmentModule_1.StatmentModule();
 transactionReportRoute.post("/ministatment", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var mphone, payload, err_1;
     return __generator(this, function (_a) {
@@ -68,8 +70,33 @@ transactionReportRoute.post("/ministatment", function (req, res) { return __awai
         }
     });
 }); });
-transactionReportRoute.post("/statment", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+transactionReportRoute.post("/statment_download", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, mphone, fromdate, todate, payload, err_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                _a = req.body, mphone = _a.mphone, fromdate = _a.fromdate, todate = _a.todate;
+                /* error handling and validation to the request parameters*/
+                if (!mphone && !todate) {
+                    throw new Error("Params are required.");
+                }
+                return [4 /*yield*/, stmModel.genaratePage(mphone, fromdate, todate)];
+            case 1:
+                payload = _b.sent();
+                res.send(payload);
+                return [3 /*break*/, 3];
+            case 2:
+                err_2 = _b.sent();
+                console.error(err_2);
+                res.status(500).send("Error: " + err_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+transactionReportRoute.post("/statment", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, mphone, fromdate, todate, payload, err_3;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -85,9 +112,9 @@ transactionReportRoute.post("/statment", function (req, res) { return __awaiter(
                 res.send(payload);
                 return [3 /*break*/, 3];
             case 2:
-                err_2 = _b.sent();
-                console.error(err_2);
-                res.status(500).send("Error: " + err_2);
+                err_3 = _b.sent();
+                console.error(err_3);
+                res.status(500).send("Error: " + err_3);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }

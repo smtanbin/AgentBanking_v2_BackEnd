@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var notificationModel_1 = __importDefault(require("./notificationModel"));
+var notificationModel_1 = __importDefault(require("../../model/Models/notificationModel/notificationModel"));
 var notificationRouter = express_1.default.Router();
 var notification = new notificationModel_1.default();
 notificationRouter.get("/maturity", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {

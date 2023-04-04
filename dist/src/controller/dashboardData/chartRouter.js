@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var FunChart_1 = __importDefault(require("./model/FunChart"));
+var FunChart_1 = __importDefault(require("../../model/Models/DashboardModel/FunChart"));
 var chartRouter = express_1.default.Router();
 var charts = new FunChart_1.default();
 chartRouter.get("/balanceChart", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {

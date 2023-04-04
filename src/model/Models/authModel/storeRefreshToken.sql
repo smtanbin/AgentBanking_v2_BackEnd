@@ -1,0 +1,1 @@
+INSERT INTO TANBIN.JWT_TOKEN (TOKEN, "USER", STATUS, GEN_DATE) VALUES(:token_value, :user_value, 'A', SYSDATE)

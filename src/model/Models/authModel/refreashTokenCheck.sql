@@ -1,0 +1,1 @@
+SELECT STATUS FROM TANBIN.JWT_TOKEN WHERE "USER" = :username_value and "TOKEN" = :token_value

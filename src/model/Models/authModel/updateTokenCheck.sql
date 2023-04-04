@@ -1,0 +1,1 @@
+UPDATE TANBIN.JWT_TOKEN SET STATUS='E',EXP_DATE=SYSDATE WHERE "USER" = :username_value and "TOKEN" = :token_value

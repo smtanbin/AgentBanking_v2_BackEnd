@@ -23,22 +23,40 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.hbs$/,
+        loader: "handlebars-loader",
+      },
+      {
+        test: /\.sql$/i,
+        use: "raw-loader",
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
+      },
     ],
   },
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "config.json"),
-          to: path.resolve(__dirname, "dist"),
-        },
-        {
           from: path.resolve(__dirname, "client", "index.html"),
           to: path.resolve(__dirname, "dist", "public"),
         },
+        { from: "config.json", to: "config.json" },
+        { from: "package.json", to: "package.json" },
         {
-          from: path.resolve(__dirname, "package.json"),
-          to: path.resolve(__dirname, "dist", "package.json"),
+          from: "src/**/*.html",
+          to: "[path][name][ext]",
+        },
+        {
+          from: "src/**/*.sql",
+          to: "[path][name][ext]",
         },
       ],
     }),

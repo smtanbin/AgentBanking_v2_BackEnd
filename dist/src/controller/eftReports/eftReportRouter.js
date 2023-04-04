@@ -45,6 +45,7 @@ var eftApp_1 = require("./eftApp");
 var eftApp_2 = require("./eftApp");
 var crypto_1 = require("crypto");
 var html_pdf_1 = __importDefault(require("html-pdf"));
+var Letter_1 = require("../../lib/Letter");
 var eftReportRouter = express_1.default.Router();
 var eft = new eftModel_1.default();
 eftReportRouter.get("/summery", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -88,13 +89,13 @@ eftReportRouter.get("/list", function (req, res) { return __awaiter(void 0, void
                 indexedResult = result.map(function (row, index) {
                     var ABS_AC_TITEL = row.ABS_AC_TITEL, ACTNUM = row.ACTNUM, AMOUNT = row.AMOUNT, HONOURED = row.HONOURED, NOTE = row.NOTE, ORIG_BANK_NAME = row.ORIG_BANK_NAME, ORIG_BRANCH_NAME = row.ORIG_BRANCH_NAME, RECIVER = row.RECIVER, SENDER = row.SENDER;
                     return {
-                        ABS_AC_TITEL: ABS_AC_TITEL,
+                        ABS_AC_TITEL: ABS_AC_TITEL.toUpperCase(),
                         ACTNUM: ACTNUM,
                         AMOUNT: AMOUNT,
-                        HONOURED: HONOURED,
-                        NOTE: NOTE,
-                        ORIG_BANK_NAME: ORIG_BANK_NAME,
-                        ORIG_BRANCH_NAME: ORIG_BRANCH_NAME,
+                        HONOURED: HONOURED === "Y" ? "Honoured" : "Pending",
+                        NOTE: (0, Letter_1.capitalizeWords)(NOTE),
+                        ORIG_BANK_NAME: (0, Letter_1.capitalizeWords)(ORIG_BANK_NAME),
+                        ORIG_BRANCH_NAME: (0, Letter_1.capitalizeWords)(ORIG_BRANCH_NAME),
                         RECIVER: RECIVER,
                         SENDER: SENDER,
                         index: index + 1,

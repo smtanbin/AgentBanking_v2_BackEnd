@@ -6,6 +6,7 @@ import { compareNames } from "./eftApp"
 import { randomUUID } from "crypto"
 
 import pdf from "html-pdf"
+import { capitalizeWords } from "../../lib/Letter"
 
 const eftReportRouter = express.Router()
 
@@ -47,13 +48,13 @@ eftReportRouter.get("/list", async (req, res) => {
         SENDER,
       } = row
       return {
-        ABS_AC_TITEL,
+        ABS_AC_TITEL: ABS_AC_TITEL.toUpperCase(),
         ACTNUM,
         AMOUNT,
-        HONOURED,
-        NOTE,
-        ORIG_BANK_NAME,
-        ORIG_BRANCH_NAME,
+        HONOURED: HONOURED === "Y" ? "Honoured" : "Pending",
+        NOTE: capitalizeWords(NOTE),
+        ORIG_BANK_NAME: capitalizeWords(ORIG_BANK_NAME),
+        ORIG_BRANCH_NAME: capitalizeWords(ORIG_BRANCH_NAME),
         RECIVER,
         SENDER,
         index: index + 1,

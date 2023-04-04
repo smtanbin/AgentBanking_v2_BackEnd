@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var FunTables_1 = __importDefault(require("./model/FunTables"));
+var FunTables_1 = __importDefault(require("../../model/Models/DashboardModel/FunTables"));
 var tableDataRouter = express_1.default.Router();
 var tableData = new FunTables_1.default();
 tableDataRouter.get("/pendingEvent", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {

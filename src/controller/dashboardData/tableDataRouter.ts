@@ -1,5 +1,5 @@
 import express from "express"
-import FunTables from "./model/FunTables"
+import FunTables from "../../model/Models/DashboardModel/FunTables"
 
 const tableDataRouter = express.Router()
 

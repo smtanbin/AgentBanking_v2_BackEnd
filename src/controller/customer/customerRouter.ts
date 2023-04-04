@@ -1,5 +1,5 @@
 import express from "express"
-import Customer from "./customerModel"
+import Customer from "../../model/Models/customerModel/customerModel"
 import _default from "chart.js/dist/plugins/plugin.tooltip"
 import numbers = _default.defaults.animations.numbers
 const customerRouter = express.Router()

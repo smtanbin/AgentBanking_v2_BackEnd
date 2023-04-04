@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Bank Account Statement</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+                border: 1px solid black;
+                padding: 5px;
+            }
+
+            th {
+                background-color: #ccc;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Bank Account Statement</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Date</th>
+                    <th>CR</th>
+                    <th>DR</th>
+                    <th>Balance</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each transactions}}
+                <tr>
+                    <td>{{SL}}</td>
+                    <td>{{TRANS_DATE}}</td>
+                    <td>{{TRANS_NO}}</td>
+                    <td>{{DR_AMT}}</td>
+                    <td>{{CR_AMT}}</td>
+                    <td>{{PARTICULAR}}</td>
+
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </body>
+
+</html>

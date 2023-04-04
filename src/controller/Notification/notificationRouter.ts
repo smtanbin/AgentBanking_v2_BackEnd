@@ -1,5 +1,5 @@
 import express from "express"
-import Notification from "./notificationModel"
+import Notification from "../../model/Models/notificationModel/notificationModel"
 
 const notificationRouter = express.Router()
 

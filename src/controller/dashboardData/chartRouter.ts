@@ -1,5 +1,5 @@
 import express from "express"
-import ChartsData from "./model/FunChart"
+import ChartsData from "../../model/Models/DashboardModel/FunChart"
 
 const chartRouter = express.Router()
 const charts = new ChartsData()

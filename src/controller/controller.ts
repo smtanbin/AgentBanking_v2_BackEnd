@@ -9,7 +9,7 @@ import chartsDataRouter from "./dashboardData/chartRouter"
 import tableDataRouter from "./dashboardData/tableDataRouter"
 import customerRouter from "./customer/customerRouter"
 import eftReportRouter from "./eftReports/eftReportRouter"
-import reportRouter from "./reports/reportRouter"
+import reportRouter from "./reportRouter/reportRouter"
 import notificationRouter from "./Notification/notificationRouter"
 import transactionReportRoute from "./Transaction/transactionReportRoute"
 

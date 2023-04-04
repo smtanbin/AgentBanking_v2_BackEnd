@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var authModel_1 = __importDefault(require("./authModel"));
+var authModel_1 = __importDefault(require("../../model/Models/authModel/authModel"));
 var authApplication_1 = __importDefault(require("./authApplication"));
 var authRouter = express_1.default.Router();
 var oauth = new authModel_1.default();
