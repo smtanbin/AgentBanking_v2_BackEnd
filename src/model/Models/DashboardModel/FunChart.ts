@@ -100,4 +100,22 @@ export default class ChartsData {
     const payload = await execute(sql, bindParams)
     return payload.rows
   }
+  async balanceDifference() {
+    const sql: string = fs
+      .readFileSync(
+        path.join(
+          __dirname,
+          "src",
+          "model",
+          "Models",
+          "DashboardModel",
+          "quarry",
+          "balanceDifference.sql"
+        )
+      )
+      .toString()
+    const bindParams: never[] = []
+    const payload = await execute(sql, bindParams)
+    return payload.rows
+  }
 }
