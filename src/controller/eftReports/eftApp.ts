@@ -1,4 +1,4 @@
-import EftReportModel from "./eftModel"
+import EftReportModel from "../../model/Models/eftModel/eftModel"
 
 export const eftReportApp = () => {
   return new Promise<any>(async (resolve, reject) => {

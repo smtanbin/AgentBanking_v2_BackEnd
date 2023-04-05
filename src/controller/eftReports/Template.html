@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Eft List</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <h4 class="text-center">List of Electronic Funds Transfer (EFT)</h4>
+                <br />
+                <div class="col-4">
+                    <h6>Summery</h6>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Products</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each summery}}
+                            <tr>
+
+                                <td>{{TYPE}}</td>
+                                <td>{{COUNT}}</td>
+                                <td>{{COUNT}}</td>
+                                <td>{{SUM}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-8">
+                    <h6>Return</h6>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Account No</th>
+                                <th scope="col">Reciver</th>
+                                <th scope="col">Titel</th>
+                                <th scope="col">Origin</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h6>List</h6>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Account No</th>
+                                <th scope="col">Titel</th>
+                                <th scope="col">Reciver</th>
+                                <th scope="col">Match</th>
+                                <th scope="col">Sender</th>
+                                <th scope="col">Orgin Branch</th>
+                                <th scope="col">Orgin Bank</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </body>
+
+</html>

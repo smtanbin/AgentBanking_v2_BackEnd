@@ -1,28 +1,18 @@
 import fs from "fs"
 import path from "path"
-import execute from "../../../model/oracleClient"
+import execute from "../../oracleClient"
 
-export default class FunTables {
-  async PendingEvent() {
+export default class EftReportModel {
+  async sum() {
     const sql: string = fs
       .readFileSync(
-        path.join(
-          __dirname,
-          "src",
-          "model",
-          "Models",
-          "DashboardModel",
-          "quarry",
-          "pendingEvent.sql"
-        )
+        path.join(__dirname, "src", "model", "Models", "eftModel", "eftSum.sql")
       )
       .toString()
-    const bindParams: never[] = []
-    const payload = await execute(sql, bindParams)
+    const payload = await execute(sql)
     return payload.rows
   }
-
-  async TransductionEvents() {
+  async list() {
     const sql: string = fs
       .readFileSync(
         path.join(
@@ -30,13 +20,27 @@ export default class FunTables {
           "src",
           "model",
           "Models",
-          "DashboardModel",
-          "quarry",
-          "transductionEvents.sql"
+          "eftModel",
+          "eftList.sql"
         )
       )
       .toString()
-
+    const payload = await execute(sql)
+    return payload.rows
+  }
+  async return() {
+    const sql: string = fs
+      .readFileSync(
+        path.join(
+          __dirname,
+          "src",
+          "model",
+          "Models",
+          "eftModel",
+          "eftReturn.sql"
+        )
+      )
+      .toString()
     const payload = await execute(sql)
     return payload.rows
   }

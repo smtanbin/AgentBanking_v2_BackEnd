@@ -1,5 +1,5 @@
 import express from "express"
-import EftReportModel from "./eftModel"
+import EftReportModel from "../../model/Models/eftModel/eftModel"
 import { Response } from "express-serve-static-core"
 import { eftReportApp } from "./eftApp"
 import { compareNames } from "./eftApp"
@@ -7,6 +7,7 @@ import { randomUUID } from "crypto"
 
 import pdf from "html-pdf"
 import { capitalizeWords } from "../../lib/Letter"
+import { eftgenaratePage } from "./eftgenaratePage"
 
 const eftReportRouter = express.Router()
 
@@ -112,6 +113,15 @@ eftReportRouter.get("/report*", async (req, res) => {
         stream.pipe(res)
       }
     )
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Error: " + err)
+  }
+})
+eftReportRouter.get("/testreport*", async (req, res) => {
+  try {
+    const html = await eftgenaratePage()
+    res.send(html)
   } catch (err) {
     console.error(err)
     res.status(500).send("Error: " + err)

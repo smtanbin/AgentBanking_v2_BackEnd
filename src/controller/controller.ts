@@ -9,9 +9,9 @@ import chartsDataRouter from "./dashboardData/chartRouter"
 import tableDataRouter from "./dashboardData/tableDataRouter"
 import customerRouter from "./customer/customerRouter"
 import eftReportRouter from "./eftReports/eftReportRouter"
-import reportRouter from "./reportRouter/reportRouter"
 import notificationRouter from "./Notification/notificationRouter"
 import transactionReportRoute from "./Transaction/transactionReportRoute"
+import reportRouter from "./reports"
 
 const controller = express.Router() // create an instance of express controller
 

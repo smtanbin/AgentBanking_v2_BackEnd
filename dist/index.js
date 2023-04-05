@@ -67,8 +67,8 @@ var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var cors_1 = __importDefault(require("cors"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
-var controller_1 = __importDefault(require("./src/controller/controller"));
-var oracleClient_1 = require("./src/model/oracleClient");
+var controller_1 = __importDefault(require("./controller/controller"));
+var oracleClient_1 = require("./model/oracleClient");
 var app = (0, express_1.default)();
 var corsOptions = {
     origin: "*",
