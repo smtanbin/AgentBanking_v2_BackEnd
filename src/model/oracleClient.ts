@@ -2,7 +2,7 @@ import oracledb from "oracledb"
 import path from "path"
 import fs from "fs"
 
-export async function createClient() {
+export const createClient = async (): Promise<any> => {
   try {
     const configPath = path.join(__dirname, "./config.json")
     const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
@@ -16,7 +16,7 @@ export async function createClient() {
     console.log("Error at 'oracleClient' function createClient ", e)
   }
 }
-
+// Bearer
 interface QueryResult<T> {
   [x: string]: any
   rows: T[]

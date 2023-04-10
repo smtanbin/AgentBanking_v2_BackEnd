@@ -2,9 +2,9 @@ import express from "express"
 import fs from "fs"
 import path from "path"
 import cors from "cors"
-import cookieParser from "cookie-parser"
-import controller from "./controller/controller"
-import { createClient } from "./model/oracleClient"
+import cookieParser from "cors"
+import controller from "./src/controller/controller"
+import { createClient } from "./src/model/oracleClient"
 
 const app: express.Express = express()
 
@@ -15,7 +15,7 @@ const corsOptions: cors.CorsOptions = {
 
 // Functions
 const runDB = async () => {
-  const client = await createClient()
+  const client = createClient()
 }
 
 // Lazy Loading

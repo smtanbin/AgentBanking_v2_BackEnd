@@ -21,8 +21,8 @@ const JWTVerifyToken = async (
 ) => {
   const authHeader = req.headers["authorization"]
   const token: any = authHeader && authHeader.split(" ")[1]
-
   if (!token) {
+    console.log("token", token)
     return res.status(401).send({ message: "Access token not found" })
   }
   try {

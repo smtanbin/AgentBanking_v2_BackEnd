@@ -34,12 +34,14 @@ controller.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 
-controller.use("*", async (req: Request, res: Response, next: NextFunction) => {
-  console.log()
-  // console.log("Authorization: ", req.headers.authorization)
-  console.log(req.baseUrl + " Body: ", req.body)
-  next()
-})
+// controller.use(
+//   "/*",
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     console.log("Authorization: ", req.headers.authorization)
+//     console.log(req.baseUrl + " Body: ", req.body)
+//     next()
+//   }
+// )
 
 controller.use("/login", authRouter)
 
@@ -47,7 +49,7 @@ controller.use("/login", authRouter)
 //   console.log("Route Requested: ", req.baseUrl)
 //   next()
 // })
-controller.use("*", JWTVerifyToken)
+controller.use("/*", JWTVerifyToken)
 // Dashboard
 controller.use("/dashboard/charts", chartsDataRouter)
 controller.use("/dashboard/tables", tableDataRouter)

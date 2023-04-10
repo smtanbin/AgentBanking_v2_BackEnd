@@ -40,6 +40,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist", "public"),
   },
   plugins: [
+   
     new CopyWebpackPlugin({
       patterns: [
         {

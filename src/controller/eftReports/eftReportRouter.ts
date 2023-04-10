@@ -1,17 +1,19 @@
 import express from "express"
+import jwt_decode from "jwt-decode"
 import EftReportModel from "../../model/Models/eftModel/eftModel"
-import { Response } from "express-serve-static-core"
-import { eftReportApp } from "./eftApp"
-import { compareNames } from "./eftApp"
-import { randomUUID } from "crypto"
-
-import pdf from "html-pdf"
+import { fuzzy } from "fast-fuzzy"
 import { capitalizeWords } from "../../lib/Letter"
 import { eftgenaratePage } from "./eftgenaratePage"
 
 const eftReportRouter = express.Router()
 
 const eft = new EftReportModel()
+
+const fuzzyHelper = (str1: string, str2: string): string => {
+  const matchScore = fuzzy(str1, str2, { normalizeWhitespace: true })
+  const percentScore = Math.round(matchScore * 100)
+  return percentScore.toString() + "%"
+}
 
 eftReportRouter.get("/summery", async (req, res) => {
   try {
@@ -22,15 +24,6 @@ eftReportRouter.get("/summery", async (req, res) => {
     res.status(500).send("Error: " + err)
   }
 })
-// eftReportRouter.get("/list", async (req, res) => {
-//   try {
-//     const result = await eft.list()
-//     res.send(result)
-//   } catch (err) {
-//     console.error(err)
-//     res.status(500).send("Error: " + err)
-//   }
-// })
 
 eftReportRouter.get("/list", async (req, res) => {
   try {
@@ -59,7 +52,7 @@ eftReportRouter.get("/list", async (req, res) => {
         RECIVER,
         SENDER,
         index: index + 1,
-        match: compareNames(row.ABS_AC_TITEL, row.RECIVER),
+        match: fuzzyHelper(row.ABS_AC_TITEL, row.RECIVER),
       }
     })
     res.send(indexedResult)
@@ -79,52 +72,18 @@ eftReportRouter.get("/return", async (req, res) => {
   }
 })
 
-eftReportRouter.get("/test", async (req, res) => {
-  const html = await eftReportApp()
-  res.send(html)
-})
-
 eftReportRouter.get("/report*", async (req, res) => {
-  const html = await eftReportApp()
-  const filename = `${randomUUID()}.pdf`
-  const options: object = {
-    format: "A4",
-    margin: {
-      top: "2cm",
-      right: "2cm",
-      bottom: "2cm",
-      left: "2cm",
-    },
-  }
-
   try {
-    pdf.create(html, options).toStream(
-      (
-        err: any,
-        stream: {
-          pipe: (arg0: Response<any, Record<string, any>, number>) => void
-        }
-      ) => {
-        res.type("pdf")
-        res.setHeader(
-          "Content-Disposition",
-          `attachment; filename="${filename}"`
-        )
-        stream.pipe(res)
-      }
-    )
-  } catch (err) {
-    console.error(err)
+    const authHeader = req.headers["authorization"]
+    const token: any = authHeader && authHeader.split(" ")[1]
+    const decoded: any = jwt_decode(token)
+    const pdf = await eftgenaratePage(decoded.username)
+    res.setHeader("Content-Type", "application/pdf")
+    res.setHeader("Content-Disposition", "attachment; filename=example.pdf")
+    res.send(pdf)
+  } catch (err: any) {
     res.status(500).send("Error: " + err)
-  }
-})
-eftReportRouter.get("/testreport*", async (req, res) => {
-  try {
-    const html = await eftgenaratePage()
-    res.send(html)
-  } catch (err) {
-    console.error(err)
-    res.status(500).send("Error: " + err)
+    throw Error(err)
   }
 })
 

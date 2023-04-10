@@ -67,8 +67,10 @@ export default class authApplication {
   RefrashTokenCheck(token: string, refreshToken: string) {
     return new Promise<any>((resolve, reject) => {
       const configPath = path.join(__dirname, "config.json") //config file
+
       const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
       const jwtConfig = config.server.security
+      console.log("jwtConfig", jwtConfig)
       const jkey = jwtConfig.rkey || process.env.RKEY
 
       const _token: any = jwt.decode(token)
