@@ -14,7 +14,7 @@ const fuzzyHelper = (str1: string, str2: string): string => {
   return percentScore.toString() + "%"
 }
 
-export const eftgenaratePage = async (user: string) => {
+export const eftgenaratePage = async (user: string,errorCallback: any) => {
   return new Promise<any>(async (resolve, reject) => {
     try {
       const d: any = new Date(Date.now())
@@ -90,31 +90,51 @@ export const eftgenaratePage = async (user: string) => {
         date,
         qrTemplateData,
       })
-      resolve(await generatePDF(html))
+        const pdf = await generatePDF(html,errorCallback)
+        resolve(pdf)
     } catch (err) {
+
       reject(err)
     }
   })
 }
-async function generatePDF(html: string) {
-  const browser = await puppeteer.launch({
-    headless: true,
-  })
-  const page = await browser.newPage()
-  await page.setViewport({
-    width: 1355,
-    height: 720,
-  })
-  await page.setContent(html)
-  const pdf = await page.pdf({
-    format: "A4",
-    margin: {
-      top: ".5cm",
-      right: "1cm",
-      bottom: "2cm",
-      left: "1cm",
-    },
-  })
-  await browser.close()
-  return pdf
+
+async function generatePDF(html: string,errorCallback: any) {
+  try {
+    console.log("Path of puppeteer", path.join(__dirname))
+    const configPath = path.join(__dirname, "./config.json")
+    const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
+
+    // if (config && config.chromium) {
+      const browser = await puppeteer.launch({
+        // executablePath: config.chromium.path,
+         args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true,
+      })
+      const page = await browser.newPage()
+      await page.setViewport({
+        width: 1355,
+        height: 720,
+      })
+      await page.setContent(html)
+      const pdf = await page.pdf({
+        format: "A4",
+        margin: {
+          top: ".5cm",
+          right: "1cm",
+          bottom: "2cm",
+          left: "1cm",
+        },
+      })
+      await browser.close()
+      return pdf
+    // } else {
+    //   console.error(`Error config.json not found`)
+    //   return new Error("config.json not found")
+    // }
+  } catch (e) {
+     errorCallback(e)
+    console.error(`Error with Puppeteer, Massage: ${e}`)
+    return new Error(`Error Genareting Pdf Msg: ${e}`)
+  }
 }

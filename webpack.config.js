@@ -3,19 +3,30 @@ const nodeExternals = require("webpack-node-externals")
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 module.exports = {
-  entry: "./dist/main.js",
+  entry: [
+    "./node_modules/puppeteer-core/lib/cjs/puppeteer/puppeteer-core.js",
+    "./dist/main.js",
+  ],
+
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "package.bundle.js",
   },
   target: "node",
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals(),
+    { "puppeteer-core": "puppeteer-core" },
+    { canvas: "commonjs canvas" },
+    { "canvas-prebuilt": "commonjs canvas-prebuilt" },
+    { fs: "commonjs fs" },
+  ],
+
   mode: "development",
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!puppeteer-core)/,
         use: {
           loader: "babel-loader",
           options: {
@@ -69,8 +80,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "client", "/**/*.*"),
-
+          from: "client/**/*.*",
           to: "public/[path][name][ext]",
         },
         {

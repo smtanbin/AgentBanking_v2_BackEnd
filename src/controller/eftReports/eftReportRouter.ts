@@ -4,6 +4,7 @@ import EftReportModel from "../../model/Models/eftModel/eftModel"
 import { fuzzy } from "fast-fuzzy"
 import { capitalizeWords } from "../../lib/Letter"
 import { eftgenaratePage } from "./eftgenaratePage"
+import { error } from "console"
 
 const eftReportRouter = express.Router()
 
@@ -58,7 +59,7 @@ eftReportRouter.get("/list", async (req, res) => {
     res.send(indexedResult)
   } catch (err) {
     console.error(err)
-    res.status(500).send("Error: " + err)
+    res.status(500).json("Error: " + err)
   }
 })
 
@@ -68,7 +69,7 @@ eftReportRouter.get("/return", async (req, res) => {
     res.send(result)
   } catch (err) {
     console.error(err)
-    res.status(500).send("Error: " + err)
+    res.status(500).json("Error: " + err)
   }
 })
 
@@ -77,13 +78,19 @@ eftReportRouter.get("/report*", async (req, res) => {
     const authHeader = req.headers["authorization"]
     const token: any = authHeader && authHeader.split(" ")[1]
     const decoded: any = jwt_decode(token)
-    const pdf = await eftgenaratePage(decoded.username)
+
+    const pdf = await eftgenaratePage(decoded.username, ((err: string) => {
+    res.status(500)
+    }))
     res.setHeader("Content-Type", "application/pdf")
     res.setHeader("Content-Disposition", "attachment; filename=example.pdf")
     res.send(pdf)
+
   } catch (err: any) {
-    res.status(500).send("Error: " + err)
+    console.log("Error: " + err)
+    res.status(500)
     throw Error(err)
+    
   }
 })
 
