@@ -1,0 +1,47 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Tanbin\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-router react-router-dom react-uuid rsuite moment
+
+PATH: 
+  C:\Users\Tanbin\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Tanbin\bin;C:\Oracle;E:\app;C:\Users\Tanbin\AppData\Local\Programs\Python\Python310\Scripts;C:\Users\Tanbin\AppData\Local\Programs\Python\Python310;C:\oracle\app;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\dotnet;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\usr\bin;C:\src\flutter\bin;C:\Users\Tanbin\AppData\Local\Microsoft\WindowsApps;C:\Users\Tanbin\AppData\Local\GitHubDesktop\bin;C:\Users\Tanbin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Tanbin\AppData\Roaming\npm;C:\Program Files\Sublime Text 3\sublime_text.exe;C:\Program Files\JetBrains\PyCharm Community Edition 2022.3\bin;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.3.2\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'E:\Current Workspace\ABSv2\standalone_frontend\hegara\node_modules\@swc\core-win32-x64-msvc\swc.win32-x64-msvc.node'
+
+npm manifest: 
+  {
+    "name": "hegara",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+      "dev": "vite",
+      "build": "tsc && vite build",
+      "preview": "vite preview"
+    },
+    "dependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+      "@types/react": "^18.0.27",
+      "@types/react-dom": "^18.0.10",
+      "@vitejs/plugin-react-swc": "^3.0.0",
+      "typescript": "^4.9.3",
+      "vite": "^4.1.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
