@@ -59,3 +59,5 @@ module.exports = {
     }),
   ],
 }
+// Example
+// "watch:webpack": "webpack -w",

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express"
-import authModel from "../../model/Models/authModel/authModel"
+import authModel from "../../model/authModel/authModel"
 import authApplication from "./authApplication"
 const authRouter = express.Router()
 

@@ -3,15 +3,16 @@ import bodyParser from "body-parser"
 import cors from "cors"
 
 // Other controllers
-import authRouter from "./auth/authRouter"
-import JWTVerifyToken from "./middleware/jwtMiddleware"
-import chartsDataRouter from "./dashboardData/chartRouter"
-import tableDataRouter from "./dashboardData/tableDataRouter"
-import customerRouter from "./customer/customerRouter"
+import authRouter from "./Auth/authRouter"
+import JWTVerifyToken from "./Middleware/jwtMiddleware"
+import chartsDataRouter from "./DashboardData/chartRouter"
+import tableDataRouter from "./DashboardData/tableDataRouter"
+import customerRouter from "./Customer/customerRouter"
 import eftReportRouter from "./eftReports/eftReportRouter"
 import notificationRouter from "./Notification/notificationRouter"
 import transactionReportRoute from "./Transaction/transactionReportRoute"
-import reportRouter from "./reports"
+import reportRouter from "./Reports"
+import massgaeRoute from "./Massage/MassageRoute"
 
 const controller = express.Router() // create an instance of express controller
 
@@ -60,6 +61,7 @@ controller.use("/notification", notificationRouter)
 controller.use("/customer", customerRouter)
 controller.use("/reports", reportRouter)
 controller.use("/eft", eftReportRouter)
+controller.use("/massageLog", massgaeRoute)
 
 controller.get("/", async (req: Request, res: Response) => {
   const date = new Date(Date.now())

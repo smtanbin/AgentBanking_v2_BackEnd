@@ -1,0 +1,49 @@
+import React, { createContext, useContext, useMemo, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEncryptedLocalStorage } from "../lib/useLocalStorage";
+
+
+interface AuthContextValue {
+  token: { token: string | null, refreshToken: string | null } | null;
+  login: (data: { token: string, refreshToken: string }) => Promise<void>;
+  logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextValue>({
+  token: null,
+  login: async () => { },
+  logout: () => { },
+});
+
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [token, setToken] = useEncryptedLocalStorage<{ token: string | null, refreshToken: string | null } | null>('auth', null);
+  const navigate = useNavigate();
+
+  // call this function when you want to authenticate the token
+  const login = async (data: { token: string, refreshToken: string }) => {
+    setToken(data);
+    navigate("/loading");
+  };
+
+  // call this function to sign out logged in token
+  const logout = () => {
+    setToken(null);
+    navigate("/loading", { replace: true });
+  };
+
+  const value = useMemo(
+    () => ({
+      token,
+      login,
+      logout,
+    }),
+    [token]
+  );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+export const useAuth = (): AuthContextValue => {
+  return useContext(AuthContext);
+};
+

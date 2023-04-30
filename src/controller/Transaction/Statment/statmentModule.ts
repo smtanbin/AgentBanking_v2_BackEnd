@@ -2,7 +2,7 @@ import puppeteer from "puppeteer-core"
 import * as handlebars from "handlebars"
 import * as fs from "fs"
 import path from "path"
-import TransactionModel from "../../../model/Models/TransactionModels/transactionModel"
+import TransactionModel from "../../../model/transactionModels/transactionModel"
 const model = new TransactionModel()
 
 export class StatmentModule {

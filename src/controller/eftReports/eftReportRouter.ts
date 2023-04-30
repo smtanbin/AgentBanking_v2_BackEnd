@@ -1,8 +1,8 @@
 import express from "express"
 import jwt_decode from "jwt-decode"
-import EftReportModel from "../../model/Models/eftModel/eftModel"
 import { fuzzy } from "fast-fuzzy"
 import { capitalizeWords } from "../../lib/Letter"
+import EftReportModel from "../../model/eftModel/eftModel"
 import { eftgenaratePage } from "./eftgenaratePage"
 
 const eftReportRouter = express.Router()

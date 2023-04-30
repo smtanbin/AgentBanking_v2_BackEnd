@@ -1,5 +1,5 @@
 import express from "express"
-import Remittance from "../../model/Models/reportModel/remittance/remittanceModel"
+import Remittance from "../../model/reportModel/remittance/remittanceModel"
 const remittanceReportRoute = express.Router()
 const remittance = new Remittance()
 

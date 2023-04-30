@@ -1,6 +1,6 @@
 import express from "express"
 import { StatmentModule } from "./Statment/statmentModule"
-import TransactionModel from "../../model/Models/TransactionModels/transactionModel"
+import TransactionModel from "../../model/transactionModels/transactionModel"
 const transactionReportRoute = express.Router()
 const transaction = new TransactionModel()
 const stmModel = new StatmentModule()

@@ -50,5 +50,5 @@ if (config.server.port) {
 
 app.listen(port, () => {
   runDB()
-  console.log(`Server is listening on port: ${port}`)
+  console.log(`Server is listening on port: http://127.0.0.1:${port}`)
 })

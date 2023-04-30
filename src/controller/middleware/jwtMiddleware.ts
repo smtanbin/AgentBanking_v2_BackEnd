@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import authApplication from "../auth/authApplication"
+import authApplication from "../Auth/authApplication"
 const authVerify = new authApplication()
 
 interface User {

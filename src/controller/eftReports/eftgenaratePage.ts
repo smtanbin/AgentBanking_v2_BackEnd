@@ -1,10 +1,10 @@
 import handlebars from "handlebars"
 import path from "path"
 import fs from "fs"
-import EftReportModel from "../../model/Models/eftModel/eftModel"
 import { fuzzy } from "fast-fuzzy"
 import generateQRCodeData from "../../lib/generateQRCodeData"
 import puppeteer from "puppeteer"
+import EftReportModel from "../../model/eftModel/eftModel"
 const eft: any = new EftReportModel()
 
 // Define a wrapper function that calls the fuzzy function with the provided arguments
