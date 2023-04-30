@@ -4,6 +4,7 @@ import fs from "fs"
 
 export const createClient = async (): Promise<any> => {
   try {
+    console.log("Path from Oracle,", path.join(__dirname ))
     const configPath = path.join(__dirname, "./config.json")
     const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
     if (!config && !config.database) {
