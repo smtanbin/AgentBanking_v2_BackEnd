@@ -1,35 +1,14 @@
-<<<<<<< HEAD
-{
-    "database": {
-        "user": "tanbin",
-        "password": "J@ria774234",
-        "connectString": "10.130.102.103:1521/ABSPDB"
-    },
-    "client": {
-        "api": "http://10.140.8.126:3001"
-    },
-    "server": {
-        "port": 3001,
-        "security": {
-            "jkey": "fxny6q36y6uim85sm75u",
-            "expires": "2000",
-            "rkey": "fxny6q36y6uim85sm75u",
-            "refrash_expires": "30000"
-        }
-    }
-}
-=======
 {
   "database": {
     "user": "tanbin",
     "password": "J@ria774234",
     "connectString": "10.130.102.103:1521/ABSPDB"
   },
-  "chromium": {
-    "path": "/opt/google/chrome"
+  "client": {
+    "api": "http://10.140.9.126:3000"
   },
   "server": {
-    "port": 3001,
+    "port": 3000,
     "security": {
       "jkey": "fxny6q36y6uim85sm75u",
       "expires": "2000",
@@ -38,4 +17,3 @@
     }
   }
 }
->>>>>>> bcc3b103a25ef8f5fa2d9e3957df0b66c19015a9

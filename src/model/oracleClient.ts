@@ -1,12 +1,14 @@
 import oracledb from "oracledb"
 import path from "path"
 import fs from "fs"
+// import { config } from "../../config"
 
 export const createClient = async (): Promise<any> => {
   try {
-    console.log("Path from Oracle,", path.join(__dirname ))
+    console.log("Path from Oracle,", path.join(__dirname))
     const configPath = path.join(__dirname, "./config.json")
     const config = JSON.parse(fs.readFileSync(configPath, "utf8"))
+
     if (!config && !config.database) {
       throw new Error("config.json file not found.")
       return undefined
